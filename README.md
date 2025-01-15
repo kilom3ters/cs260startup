@@ -21,4 +21,10 @@ I will use the following technologies:
 - **HTML** - Uses correct HTML structure for the application. I plan to have two HTML pages. One for users pages and one for friends pages.
 - **CSS** - Application styling that will look good on a variety of screen sizes, makes good use of whitespace, color choice and contrast.
 - **React** - Allows for login, list of games that users can interact with, displaying ratings, and routing and components
-- **
+- **Service** - Backend service with endpoints for:
+    - login
+    - add game lists
+    - remove/change data
+    - use third party API to collect game data using this [link](https://www.igdb.com/api)
+- **DB/Login** - Store games, lists, and user data. Register and store user logins.
+- **WebSocket** - Allow users to see other user's list info. Allow users to see friends.
