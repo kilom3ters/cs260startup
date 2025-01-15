@@ -20,7 +20,7 @@ Do you keep track of your books read on *Goodreads* (or something similar) and t
 
 ### Technologies
 I will use the following technologies:
-- **HTML** - Uses correct HTML structure for the application. I plan to have two HTML pages. One for users pages and one for friends pages.
+- **HTML** - Uses correct HTML structure for the application. I plan to have three HTML pages. One for login/account creation, one for users pages, and one for friends pages.
 - **CSS** - Application styling that will look good on a variety of screen sizes, makes good use of whitespace, color choice and contrast.
 - **React** - Allows for login, list of games that users can interact with, displaying ratings, and routing and components
 - **Service** - Backend service with endpoints for:
