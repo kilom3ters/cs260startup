@@ -1,1 +1,4 @@
-# cs260startup hello world
+# cs260startup
+## Specification Deliverable
+
+### Elevator Pitch
