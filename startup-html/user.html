@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Home Page</title>
 </head>
+<section>
+    <form id="game-search-form">
+        <input type="text" id="game-search" name="game-search" placeholder="find games....">
+        <button type="submit">Search</button>
+    </form>
+    <p id="search-results">Will display results from API</p>
+</section>
+
 <body>
     <header>
         <h1>Welcome, Nathanael Tate Cotton</h1>
@@ -15,23 +23,31 @@
             <img src="assets/images/IMG_0868.JPG" width = "150" hight = "200">
         </section>
         <section>
-            <h2>Your Favorite Game</h2>
-            <p>Placeholder for favorite game.</p>
+            <div id = "favorite-game">
+            <h3>Favorite Game</h3>
+            <p>Favorite game placeholder</p>
+            </div>
         </section>
         <section>
-            <h2>Your Stats</h2>
+            <div id="games-played">
+                <h3>Games Played:</h3>
+                <p><span id = "count-games-played">0</span></p>
+            </div>
+            <h3>Your Stats</h3>
             <p>Placeholder for game stats</p>
         </section>
         <section>
-            <h2>Game Lists</h2>
+            <div id = "user-lists">
+            <h3>Game Lists</h3>
             <ul>
                 <li>Filler list 1</li>
                 <li>Fillerlist 2</li>
                 <li>Filler list 3</li>
             </ul>
+            </div>
         </section>
         <section>
-            <h2>Friends</h2>
+            <h3>Friends</h3>
             <ul>
                 <li>Friend 1</li>
                 <li>Friend 2</li>
@@ -41,6 +57,7 @@
         <section>
             <a href="index.html" class="button">Logout</a>
         </section>
+        
         <footer>
             <p>Miles Johnson: <a href = "https://github.com/kilom3ters/cs260startup/tree/main"> GitHub Repository</a></p>
         </footer>
