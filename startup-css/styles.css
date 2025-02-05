@@ -8,6 +8,7 @@ body {
     font-family: "Verdana", sans-serif;
 }
 
+/* for index.html */
 .left-side {
     background-color: black;
     color: white;
@@ -27,7 +28,7 @@ body {
     align-items: center;
 }
 
-
+/* for user page */
 .button {
     display: block;
     width: 200px;
@@ -98,3 +99,45 @@ body {
     margin: auto;
 }
 
+/* for login page */
+.container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-black {
+    background-color: black;
+    text-align: center;
+}
+
+.bg-white {
+    text-align: center;
+}
+
+form {
+    max-width: 400px;
+}
+
+.btn-light {
+    color: black;
+    background-color: white;
+}
+
+.btn-light:hover {
+    background-color: gray;
+}
+
+.btn-dark {
+    background-color: black;
+    color: white;
+}
+
+.btn-dark:hover {
+    background-color: gray;
+}
+
+footer {
+    background-color: black;
+    color: white;
+}
