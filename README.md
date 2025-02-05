@@ -57,3 +57,35 @@ For this deliverable, I did the following:
 - **DB Data** – The user page has a database placeholder that will store **games played** and **user lists**. The for now the HTML structure uses a table element to show data.  
 
 - **WebSocket** – The user page contains a place where real-time updates to **friends' pages** will be displayed. New **games added** and **reviews written** by friends will appear in real-time.  
+
+## CSS Deliverable
+
+For this deliverable, I:
+
+- ** Header, footer, and main content body **  
+  - I used a CSS file (styles.css) to style the header, footer, and main content for the index.html page.
+  - The user profile page has additional styling in user-styles.css.
+
+- ** Navigation elements**  
+  - Implemented a **Bootstrap Navbar** for easy navigation and search functionality.
+  - The sidebar menu provides quick access to user features.
+
+- ** Responsive to window resizing**  
+  - Used **Bootstrap grid system** and display: flex; to ensure all elements resize properly.
+  - The **mobile layout stacks sections** vertically and moves the log-out button to the bottom.
+
+- ** Application elements**  
+  - Used **CSS flexbox** and **Bootstrap utilities** to align and organize elements properly.
+  - Ensured the sidebar remains fixed on larger screens and disappears on mobile.
+
+- ** Application text content**  
+  - Set the default font to **Verdana** for a clean, modern look.
+
+- ** Application images**  
+  - Ensured profile and game images are properly scaled using max-width: 100% inside responsive containers.
+  - Used **Bootstrap utility classes** for consistent image alignment.
+
+# **Additional Features**
+- The **Login page** follows a **two-column layout** on desktop but stacks properly on mobile.
+- The **Log Out button** moves to the bottom only when the sidebar is hidden.
+- The **User Profile page** dynamically adjusts the sidebar, user stats, and game lists for both desktop and mobile.
