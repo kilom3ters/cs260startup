@@ -45,4 +45,40 @@ body {
 }
 
 footer {
-    font-family: "Ver
+    font-family: "Verdana", sans-serif;
+    background-color: white;
+    color: black;
+    padding: 15px 0;
+    align-items: right;
+    text-align: right;
+    width: 50vw;
+    margin-left: 50vw;
+    position: fixed;
+    bottom: 0;
+}
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-side {
+        position: relative;
+        width: 100vw;
+        height: 50vh;
+        padding: 20px;
+    }
+
+    .right-side {
+        width: 100vw;
+        height: 50vh;
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    footer {
+        width: 100vw;
+        margin-left: 0;
+        text-align: center;
+    }
+}
