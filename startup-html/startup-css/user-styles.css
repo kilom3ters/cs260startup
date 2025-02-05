@@ -1,10 +1,57 @@
-main {
-    display: flex;
-    height: 100vh;
-}
 
 body {
     font-family: "Verdana", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.sidebar .nav {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar .nav-link {
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.sidebar .nav-link:hover {
+    background-color: gray;
+    border-radius: 5px;
+}
+
+.main-content {
+    margin-left: 250px;
+    width: calc(100vw - 250px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+    padding: 20px;
+}
+
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 250px;
+    width: calc(100vw - 250px);
 }
 
 .button {
@@ -29,50 +76,8 @@ body {
     color: black;
 }
 
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 250px;
-    background-color: black;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.main-content {
-    margin-left: 250px; 
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.input-group {
-    max-width: 400px;
-    margin: 20px auto;
-}
-
-.stats {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.card {
-    width: 200px;
-    border-radius: 10px;
-}
-
-
-.table {
-    width: 80%;
-    margin: auto;
-}
-
-.list-group {
-    width: 80%;
-    margin: auto;
+/* Bootstrap Fix for Centering Issue */
+.row {
+    margin-left: 0;
+    margin-right: 0;
 }
