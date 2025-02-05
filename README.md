@@ -85,7 +85,7 @@ For this deliverable, I:
   - Ensured profile and game images are properly scaled using max-width: 100% inside responsive containers.
   - Used **Bootstrap utility classes** for consistent image alignment.
 
-# **Additional Features**
+ **Additional Features**:
 - The **Login page** follows a **two-column layout** on desktop but stacks properly on mobile.
 - The **Log Out button** moves to the bottom only when the sidebar is hidden.
 - The **User Profile page** dynamically adjusts the sidebar, user stats, and game lists for both desktop and mobile.
