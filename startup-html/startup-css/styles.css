@@ -10,18 +10,49 @@ body {
 .left-side {
     background-color: black;
     color: white;
-    width: 50%;
+    height: 100vh;
+    width: 50vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: fixed;
     padding: 40px;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }
 
 .right-side {
     background-color: white;
-    width: 50%;
+    height: 100vh;
+    width: 50vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 50vw;
+}
+
+.btn {
+    display: block !important;
+    width: 200px !important;
+    text-align: center;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+footer {
+    font-family: "Verdana", sans-serif;
+    background-color: white;
+    color: black;
+    padding: 15px 0;
+    align-items: right;
+    text-align: right;
+    width: 50vw;
+    margin-left: 50vw;
+    position: fixed;
+    bottom: 0;
 }
