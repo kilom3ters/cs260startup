@@ -1,12 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    <section>
-        <form id="game-search-form">
-            <input type="text" id="game-search" name="game-search" placeholder="find games....">
-            <button type="submit">Search</button>
-        </form>
-        <p id="search-results">Will display results from API</p>
-    </section>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +8,14 @@
     <title>Welcome</title>
 </head>
 <body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <form class="d-flex ms-auto" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
     <header>
         <h1>Welcome to GameLog</h1>
     </header>
