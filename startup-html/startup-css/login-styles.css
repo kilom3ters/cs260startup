@@ -60,3 +60,33 @@ form {
 .btn-dark:hover {
     background-color: gray;
 }
+
+@media (max-width: 768px) {
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .right-side {
+        order: -1;
+        height: auto;
+        width: 100vw;
+        padding: 20px;
+        margin-left: 0;
+    }
+
+    .left-side {
+        position: relative;
+        height: auto;
+        width: 100vw; 
+        padding: 20px;
+        margin-right: 0;
+    }
+
+    .btn, .button {
+        width: 100%; 
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
