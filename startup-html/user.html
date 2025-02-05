@@ -3,100 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <title>Home</title>
-</head>
-<section>
-    <form id="game-search-form">
-        <input type="text" id="game-search" name="game-search" placeholder="find games....">
-        <button type="submit">Search</button>
-    </form>
-    <p id="search-results">Will display results from API</p>
-</section>
+    <title>User Profile</title>
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
 <body>
-    <header>
-        <h1>Welcome, Nathanael Tate Cotton</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Profile</h2>
-            <img src="assets/images/IMG_0868.JPG" width = "150" hight = "200">
-        </section>
-        <section>
-            <div id = "favorite-game">
-            <h3>Favorite Game</h3>
-            <p>The Binding of Isaac</p>
+
+    <!-- Full Page Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            
+            <!-- Static Sidebar (Always Visible) -->
+            <div class="col-md-3 col-lg-2 bg-dark text-white vh-100 p-3 sidebar">
+                <div class="text-center">
+                    <img src="assets/images/IMG_0868.JPG" width="100">
+                    <h4>Nathanael Tate Cotton</h4>
+                    <button class="btn btn-light w-100 mt-2">+ Add Friend</button>
+                </div>
+                <hr>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Friends</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="index.html"> Log Out</a></li>
+                </ul>
             </div>
-        </section>
-        <section>
-            <div id="games-played">
-                <h3>Games Played:</h3>
-                <p><span id = "count-games-played">0</span></p>
-            </div>
-            <h3>Stats:</h3>
-            <p>37 achievements, 30% average completion, 27 hours played</p>
-        </section>
-        <section>
-            <div id = "user-lists">
-            <h3>Game Lists</h3>
-            <p>Will use DB to store games played and user lists and reviews</p>
-            <table border="1">
-                <tbody>
-                    <tr>
-                        <td>Must Play Games</td>
-                        <td>Resident Evil 4</td>
-                    </tr>
-                    <tr>
-                        <td>To-Play List</td>
-                        <td>Mass Effect 2</td>
-                    </tr>
-                    <tr>
-                        <td>Did Not Finish</td>
-                        <td>Elden Ring</td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
-        </section>
-        <section>
-            <div id = "friends-list">
-            <h3>Friends</h3>
-            <table border="1">
-                <tbody>
-                    <tr>
-                        <td>Bob Dylan</td>
-                    </tr>
-                    <tr>
-                        <td>Taylor Swift</td>
-                    </tr>
-                    <tr>
-                        <td>Katy Perry</td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
-        </section>
-        <section id="friends-games-updates">
-            <h3>Friends' Activity</h3>
-            <p>Will use WebSocket here for live updating friends reviews and lists</p>
-                    <div class="friend-activity">
-                        <h3>Friend: <span class="friend-name">Susan</span></h3>
-                        <ul class="game-list">
-                            <li>Reviewed Elden Ring</li>
-                        </ul>
+            <div class="col-md-9 col-lg-10 p-4">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <form class="input-group">
+                            <input type="text" class="form-control" placeholder="Find games...">
+                            <button class="btn btn-dark" type="submit">Search</button>
+                        </form>
                     </div>
-            </section>
-        <section>
-            <p><br><br></p>
-        </section>
-        <section>
-            <a href="index.html" class="button">Logout</a>
-        </section>
-    </main>
-    <footer>
-        <p>Miles Johnson: <a href = "https://github.com/kilom3ters/cs260startup/tree/main"> GitHub Repository</a></p>
-    </footer>
+                </div>
+                <!-- Welcome Header -->
+                <div class="row my-4">
+                    <div class="col-12 text-center">
+                        <h1>Welcome, Nathanael Tate Cotton</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card bg-dark text-white text-center p-3">
+                            <h4>Games This Month</h4>
+                            <p class="fs-3">3</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center p-3">
+                            <h4>Total Games</h4>
+                            <p class="fs-3">98</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center p-3">
+                            <h4>Favorites</h4>
+                            <p class="fs-3">32</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-4">
+                    <div class="col-12">
+                        <h3>Game Lists</h3>
+                        <table class="table table-dark table-striped">
+                            <tbody>
+                                <tr><td>Must Play Games</td><td>Resident Evil 4</td></tr>
+                                <tr><td>To-Play List</td><td>Mass Effect 2</td></tr>
+                                <tr><td>Did Not Finish</td><td>Elden Ring</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row my-4">
+                    <div class="col-12">
+                        <h3>Friends</h3>
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr><td>Bob Dylan</td></tr>
+                                <tr><td>Taylor Swift</td></tr>
+                                <tr><td>Katy Perry</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row my-4">
+                    <div class="col-md-6 mx-auto">
+                        <h3>Recent Games</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">Life is Strange</li>
+                            <li class="list-group-item">The Fox in the Forest</li>
+                            <li class="list-group-item">Balatro</li>
+                            <li class="list-group-item">Hades II</li>
+                            <li class="list-group-item">Soma</li>
+                            <li class="list-group-item">Outlast</li>
+                        </ul>
+                        <a href="#" class="d-block text-center mt-2">See all games</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
