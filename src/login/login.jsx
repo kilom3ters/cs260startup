@@ -1,12 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './login-styles.css';
 
 export function Login() {
+  const navigate = useNavigate();
+
   return (
     <main className="container-fluid bg-secondary text-center vh-100">
       <div className="container-fluid vh-100">
         <div className="row h-100">
+
           <div className="col-md-6 d-flex flex-column justify-content-center align-items-center text-white bg-black p-5">
             <h1 className="mb-4">Create an Account</h1>
             <form className="w-75">
@@ -24,7 +28,7 @@ export function Login() {
               </div>
               <button type="submit" className="btn btn-light w-100">Create Account</button>
             </form>
-            <a href="/user" className="btn btn-outline-light mt-3">Skip Login</a>
+            <button onClick={() => navigate('/user')} className="btn btn-outline-light mt-3">Skip Login</button>
           </div>
 
           <div className="col-md-6 d-flex flex-column justify-content-center align-items-center p-5 bg-white text-black">
@@ -41,7 +45,7 @@ export function Login() {
               <button type="submit" className="btn btn-dark w-100">Login</button>
               <p className="mt-3"><a href="#" className="text-dark">Forgot password?</a></p>
             </form>
-            <a href="/user" className="btn btn-outline-dark mt-3">Skip Login</a>
+            <button onClick={() => navigate('/user')} className="btn btn-outline-dark mt-3">Skip Login</button>
           </div>
         </div>
       </div>

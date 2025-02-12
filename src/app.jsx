@@ -8,32 +8,7 @@ import { Home } from './home/home';
 
 
 export default function App() {
-  return ( <BrowserRouter> 
-  <div className='app bg-dark text-light'> 
-    <header className="container-fluid">
-        <nav className='navbar fixed-top navbar-dark'>
-            <div className='navbar-brand'>
-                Gamelog<sup>&reg;</sup>
-                    </div>
-  <menu className='navbar-nav'>
-    <li className='nav-item'>
-      <NavLink className='nav-link' to='/'>
-        Home
-      </NavLink>
-    </li>
-    <li className='nav-item'>
-      <NavLink className='nav-link' to='/login'>
-        Login
-      </NavLink>
-    </li>
-    <li className='nav-item'>
-      <NavLink className='nav-link' to='/user'>
-        User
-      </NavLink>
-    </li>
-  </menu>
-</nav>
-</header>
+  return ( <BrowserRouter> ( <div>)
 
 <Routes>
  <Route path='/' element={<Home />} exact />

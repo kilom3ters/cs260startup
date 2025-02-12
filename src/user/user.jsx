@@ -21,7 +21,7 @@ export function User() {
                 <a className="nav-link text-white" href="#">Friends</a>
               </li>
               <li className="nav-item">
-                <button className="nav-link text-danger fw-bold btn btn-link" onClick={() => navigate('/login')}>
+                <button className="nav-link text-danger fw-bold btn btn-link" onClick={() => navigate('/')}>
                   Log Out
                 </button>
               </li>
@@ -107,7 +107,7 @@ export function User() {
                 </ul>
                 <a href="#" className="d-block text-center mt-2">See all games</a>
                 <div className="logout-button">
-                  <button onClick={() => navigate('/home')} className="btn btn-dark btn-lg w-100 mb-3">Logout</button>
+                  <button onClick={() => navigate('/')} className="btn btn-dark btn-lg w-100 mb-3">Logout</button>
                 </div>
               </div>
             </div>
