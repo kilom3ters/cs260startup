@@ -4,9 +4,11 @@ import './app.css';
 import {Login} from './login/login'
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { User } from './user/user';
+import { Home } from './home/home';
+
 
 export default function App() {
-  return <BrowserRouter> 
+  return ( <BrowserRouter> 
   <div className='app bg-dark text-light'> 
     <header className="container-fluid">
         <nav className='navbar fixed-top navbar-dark'>
@@ -20,12 +22,12 @@ export default function App() {
       </NavLink>
     </li>
     <li className='nav-item'>
-      <NavLink className='nav-link' to='login'>
+      <NavLink className='nav-link' to='/login'>
         Login
       </NavLink>
     </li>
     <li className='nav-item'>
-      <NavLink className='nav-link' to='user'>
+      <NavLink className='nav-link' to='/user'>
         User
       </NavLink>
     </li>
@@ -41,14 +43,15 @@ export default function App() {
 </Routes>
 
 <footer>
-    <div class="container">
-          <div class="container-fluid">
+    <div className="container">
+          <div className="container-fluid">
             <p>Miles Johnson: <a href = "https://github.com/kilom3ters/cs260startup/tree/main"> GitHub Repository</a></p>
           </div>
     </div>
     </footer>
 </div>
 </BrowserRouter>
+  );
 };
 
 function NotFound() {

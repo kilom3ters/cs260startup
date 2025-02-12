@@ -5,6 +5,9 @@ main {
 
 .body {
     font-family: "Verdana", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-width: 375px;
 }
 
 .left-side {
