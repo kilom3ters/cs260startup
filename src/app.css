@@ -1,39 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 main {
     display: flex;
     height: 100vh;
 }
 
-.body {
+html, body {
     font-family: "Verdana", sans-serif;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     min-width: 375px;
 }
 
 .left-side {
-    background-color: black;
+    background-color: black !important;
     color: white;
     height: 100vh;
     width: 50vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: fixed;
-    padding: 40px;
+    text-align: right;
+    align-items: center;
+    position: absolute;
+    padding: 20 px;
     left: 0;
     top: 0;
     bottom: 0;
 }
 
 .right-side {
-    background-color: white;
+    background-color: white !important;
     height: 100vh;
     width: 50vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    position: fixed;
+    right: 0 !important;
+    top: 0;
     margin-left: 50vw;
+    padding: 20px;
 }
 
 .btn {
@@ -50,15 +65,19 @@ main {
 footer {
     font-family: "Verdana", sans-serif;
     background-color: white;
-    color: black;
-    padding: 15px 0;
+    color: black !important;
+    padding: 15px 20px;
     align-items: right;
     text-align: right;
     width: 50vw;
     margin-left: 50vw;
     position: fixed;
     bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
 }
+
 @media (max-width: 768px) {
     main {
         flex-direction: column;
