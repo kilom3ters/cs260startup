@@ -28,15 +28,8 @@ export function User() {
             </ul>
           </div>
 
-          <div className="col-md-9 col-lg-10 p-4">
-            <div className="row">
-              <div className="col-md-6 mx-auto">
-                <form className="input-group">
-                  <input type="text" className="form-control" placeholder="Find games..." />
-                  <button className="btn btn-dark" type="submit">Search</button>
-                </form>
-              </div>
-            </div>
+
+            <div className="main-content">
 
             <div className="row my-4">
               <div className="col-12 text-center">
@@ -68,31 +61,36 @@ export function User() {
               </div>
             </div>
 
-            <div className="row my-4">
-              <div className="col-12">
-                <h3>Game Lists</h3>
-                <table className="table table-black table-striped">
-                  <tbody>
-                    <tr><td>Must Play Games</td><td>Resident Evil 4</td></tr>
-                    <tr><td>To-Play List</td><td>Mass Effect 2</td></tr>
-                    <tr><td>Did Not Finish</td><td>Elden Ring</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <div className="row my-4 justify-content-center">
+  <div className="col-md-10 col-lg-8 mx-auto text-center"> 
+    <h3>Game Lists</h3>
+    <div className="table-responsive">
+      <table className="table table-black table-striped text-center mx-auto"> 
+        <tbody>
+          <tr><td>Must Play Games</td><td>Resident Evil 4</td></tr>
+          <tr><td>To-Play List</td><td>Mass Effect 2</td></tr>
+          <tr><td>Did Not Finish</td><td>Elden Ring</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-            <div className="row my-4">
-              <div className="col-12">
-                <h3>Friends</h3>
-                <table className="table table-striped">
-                  <tbody>
-                    <tr><td>Bob Dylan</td></tr>
-                    <tr><td>Taylor Swift</td></tr>
-                    <tr><td>Katy Perry</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+<div className="row my-4 justify-content-center">
+  <div className="col-md-10 col-lg-8 mx-auto text-center">
+    <h3>Friends</h3>
+    <div className="table-responsive">
+      <table className="table table-striped text-center mx-auto">
+        <tbody>
+          <tr><td>Bob Dylan</td></tr>
+          <tr><td>Taylor Swift</td></tr>
+          <tr><td>Katy Perry</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 
             <div className="row my-4">
               <div className="col-md-6 mx-auto">
