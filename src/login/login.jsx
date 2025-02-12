@@ -10,7 +10,7 @@ export function Login() {
     <main className="container-fluid bg-secondary text-center vh-100">
       <div className="container-fluid vh-100">
         <div className="row h-100">
-
+            <div className="left-side-login">
           <div className="col-md-6 d-flex flex-column justify-content-center align-items-center text-white bg-black p-5">
             <h1 className="mb-4">Create an Account</h1>
             <form className="w-75">
@@ -30,7 +30,9 @@ export function Login() {
             </form>
             <button onClick={() => navigate('/user')} className="btn btn-outline-light mt-3">Skip Login</button>
           </div>
-
+        </div>
+          
+          <div className="right-side-login">
           <div className="col-md-6 d-flex flex-column justify-content-center align-items-center p-5 bg-white text-black">
             <h1 className="mb-4">Login to GameLog</h1>
             <form className="w-75">
@@ -48,6 +50,7 @@ export function Login() {
             <button onClick={() => navigate('/user')} className="btn btn-outline-dark mt-3">Skip Login</button>
           </div>
         </div>
+      </div>
       </div>
     </main>
   );
