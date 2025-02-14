@@ -5,8 +5,8 @@
 Do you keep track of your books read on *Goodreads* (or something similar) and the movies you watch on something like *Letterboxd*? Do you wish you could see what video games you have played and what you thought of them? This video game tracking application makes it so the user can record what games they have played, give it a score so they can see thought, and review the lists created by their friends. There is no other software exclusively for video game tracking like this.
 
 ### Design
-![mockup_startup_02.png](https://github.com/kilom3ters/cs260startup/blob/main/mockup_startup_02.png)
-![mockup_startup_01.png](https://github.com/kilom3ters/cs260startup/blob/main/mockup_startup_01.png)
+![./public/mockup_startup_02.png](https://github.com/kilom3ters/cs260startup/blob/main/mockup_startup_02.png)
+![./public/mockup_startup_01.png](https://github.com/kilom3ters/cs260startup/blob/main/mockup_startup_01.png)
 
 
 ### Key Features
@@ -89,3 +89,35 @@ For this deliverable, I:
 - The **Login page** follows a **two-column layout** on desktop but stacks properly on mobile.
 - The **Log Out button** moves to the bottom only when the sidebar is hidden.
 - The **User Profile page** dynamically adjusts the sidebar, user stats, and game lists for both desktop and mobile.
+
+## React Part 1 Deliverable
+
+### Transition to React
+For this deliverable, I transitioned my application to a React-based architecture. The application now functions correctly for a single user, with structured components and placeholders for future enhancements.
+
+### Components
+- **Home.jsx**: Contains buttons for navigation using React Router instead of a navbar.
+- **Login.jsx**: Includes login and account creation forms, as well as a "Skip Login" button for quick navigation.
+- **User.jsx**: Displays the user profile, game statistics, and a list of friends, with full sidebar functionality.
+- **Buttons & Forms**: All buttons dynamically navigate using useNavigate() from React Router.
+
+### Routing
+- Implemented React Router for page transitions:
+  - / → Home page with navigation buttons.
+  - /login → Login page with sign-in and account creation.
+  - /user → User profile and game list.
+
+### CSS & Styling Fixes
+- All pages now scale properly across screen sizes.
+- Forms and buttons are centered correctly inside their respective sections.
+- Prevented shrinking issues on input fields when resizing.
+- Login and Create Account buttons now properly align and shift with the screen size.
+
+### Mobile Responsiveness
+- Used CSS media queries to handle layout changes for small screens.
+- On mobile, the sidebar is hidden, and the navigation buttons scale properly.
+- The login page adapts to stack components correctly for mobile users.
+
+### Future Implementations
+- **Database Integration**: Game lists and friend lists will be stored using database integration in the future.
+- **WebSocket Placeholder**: Future functionality will include real-time updates for user interactions between friends and friend's lists.
