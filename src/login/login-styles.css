@@ -11,67 +11,82 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
-.left-side-login {
-    background-color: black;
-    color: white;
-    height: 100vh;
-    width: 50vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center ;
-    position: fixed;
-    padding: 20px;
-    left: 0;
-    top: 0;
-    bottom: 0;
-}
-
-.right-side-login {
-    background-color: white;
+.left-side-login, .right-side-login {
     height: 100vh;
     width: 50vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 50vw;
+    padding: 20px;
     position: fixed;
-    right: 0;
+    text-align: center;
     top: 0;
+    bottom: 0;
+}
+
+.left-side-login {
+    background-color: black;
+    color: white;
+    left: 0;
+}
+
+.right-side-login {
+    background-color: white;
+    right: 0;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 form {
+    width: 100%;
     max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-control {
+    width: 100%;
+    min-width: 300px;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+}
+
+
+.btn-container {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .btn {
-    display: flex;
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+    text-align: center;
 }
 
-.btn-light {
-    color: black;
-    background-color: white;
-}
-
-.btn-light:hover {
-    background-color: gray;
-}
-
-.btn-dark {
-    background-color: black;
-    color: white;
-}
-
-.btn-dark:hover {
-    background-color: gray;
+.skip-login {
+    margin-top: 10px;
 }
 
 @media (max-width: 768px) {
     .container-fluid {
-        display: flex;
         flex-direction: column;
         align-items: center;
     }
@@ -83,25 +98,22 @@ form {
         width: 100vw !important;
         padding: 20px;
         margin-bottom: 50vh;
-        justify-content: center;
-        align-items: center;
-
     }
 
     .left-side-login {
         position: fixed;
         height: 50vh !important;
-        width: 100vw !important; 
+        width: 100vw !important;
         padding: 20px;
         margin-top: 50vh;
-        justify-content: center;
-        align-items: center;
     }
 
-    .btn, .button {
-        width: 100%; 
-        font-size: 1rem;
-        padding: 12px;
+    .form-control {
+        max-width: 100%;
+    }
+
+    .btn {
+        width: 100%;
     }
 
     footer {
