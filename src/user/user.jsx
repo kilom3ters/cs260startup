@@ -8,8 +8,8 @@
     return (
    
       
-      <div className="container-fluid">
-      <nav className="navbar bg-white">
+      <div>
+      <nav className="navbar-user bg-white">
             <form className="d-flex ms-auto" role="search">
               <input className="form-control me-2" type="search" placeholder="Search Users" aria-label="Search" />
               <button className="btn btn-outline-dark" type="submit">Search</button>
@@ -36,7 +36,7 @@
           </div>
 
 
-            <div className="main-content">
+            <div className="main-content-user">
 
             <div className="row my-4">
               <div className="col-12 text-center">

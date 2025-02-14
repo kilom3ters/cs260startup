@@ -41,9 +41,9 @@ main{
     border-radius: 5px;
 }
 
-.main-content {
-    margin-left: 500px;
-    width: calc(100vw);
+.main-content-user {
+    width: calc(100vw - 250px);
+    margin-left: 250px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -51,13 +51,8 @@ main{
     justify-content: center;
     padding: 20px;
     background-color: white;
-}
-
-.container-fluid {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: 250px;
-    width: calc(100vw - 250px);
+    padding-top: 60px;
+    position: absolute;
 }
 
 .button {
@@ -77,6 +72,16 @@ main{
     transition: 0.3s;
 }
 
+.navbar-user {
+    width: calc(100vw - 250px);
+    margin-left: 250px;
+    position: relative;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+    z-index: 999;
+}
+
 .button:hover {
     background-color: white;
     color: black;
@@ -88,7 +93,7 @@ main{
 }
 
 .table {
-    width: 100%;
+    width: 35vw !important;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -109,14 +114,15 @@ h3 {
 .table-responsive {
     display: flex;
     justify-content: center; 
-    width: 100%;
+    width: 35vw !important;
 }
 
 .list-group {
     display: flex;
     flex-direction: column;
     align-items: center; 
-    width: 100%;
+    width: 35vw !important;
+    justify-content: center;
 }
 
 .list-group-item {
@@ -139,7 +145,7 @@ h3 {
 
 @media (max-width: 768px) {
     .sidebar {
-        display: none;
+        display: none !important;
     }
 
     .main-content {
@@ -157,6 +163,10 @@ h3 {
         margin-top: auto;
         position: relative;
         bottom: 0;
+    }
+
+    .navbar {
+        padding: 10px;
     }
 
 }
