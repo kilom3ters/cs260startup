@@ -73,8 +73,8 @@ form {
     }
 
     .right-side {
-        order: -1;
-        height: auto;
+ 
+        height: 50vh !important;
         width: 100vw;
         padding: 20px;
         margin-left: 0;
@@ -82,7 +82,7 @@ form {
 
     .left-side {
         position: relative;
-        height: auto;
+        height: 50vh !important;
         width: 100vw; 
         padding: 20px;
         margin-right: 0;
@@ -92,5 +92,9 @@ form {
         width: 100%; 
         font-size: 1rem;
         padding: 12px;
+    }
+
+    footer {
+        display: none;
     }
 }

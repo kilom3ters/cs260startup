@@ -1,13 +1,20 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './user-styles.css';
-
-export function User() {
-  const navigate = useNavigate();
-
-  return (
-    <main className="container-fluid bg-secondary text-center">
+  import React from 'react';
+  import { useNavigate } from 'react-router-dom';
+  import './user-styles.css';
+  
+  export function User() {
+    const navigate = useNavigate();
+  
+    return (
+   
+      
       <div className="container-fluid">
+      <nav className="navbar bg-white">
+            <form className="d-flex ms-auto" role="search">
+              <input className="form-control me-2" type="search" placeholder="Search Users" aria-label="Search" />
+              <button className="btn btn-outline-dark" type="submit">Search</button>
+            </form>
+        </nav>
         <div className="row">
           <div className="col-md-3 col-lg-2 bg-black text-white vh-100 p-3 sidebar">
             <div className="text-center">
@@ -92,18 +99,20 @@ export function User() {
 </div>
 
 
-            <div className="row my-4">
-              <div className="col-md-6 mx-auto">
-                <h3>Recent Games</h3>
-                <ul className="list-group">
-                  <li className="list-group-item">Life is Strange</li>
-                  <li className="list-group-item">The Fox in the Forest</li>
-                  <li className="list-group-item">Balatro</li>
-                  <li className="list-group-item">Hades II</li>
-                  <li className="list-group-item">Soma</li>
-                  <li className="list-group-item">Outlast</li>
-                </ul>
-                <a href="#" className="d-block text-center mt-2">See all games</a>
+<div className="row my-4 justify-content-center">
+  <div className="col-md-8 col-lg-6 text-center"> 
+    <h3>Recent Games</h3>
+    <ul className="list-group mx-auto w-100" style={{ maxWidth: "500px" }}>
+      <li className="list-group-item">Life is Strange</li>
+      <li className="list-group-item">The Fox in the Forest</li>
+      <li className="list-group-item">Balatro</li>
+      <li className="list-group-item">Hades II</li>
+      <li className="list-group-item">Soma</li>
+      <li className="list-group-item">Outlast</li>
+    </ul>
+    <a href="#" className="d-block text-center mt-2">See all games</a>
+
+
                 <div className="logout-button">
                   <button onClick={() => navigate('/')} className="btn btn-dark btn-lg w-100 mb-3">Logout</button>
                 </div>
@@ -112,6 +121,6 @@ export function User() {
           </div>
         </div> 
       </div> 
-    </main>
+
   );
 }

@@ -28,7 +28,7 @@ html, body {
     justify-content: center;
     text-align: right;
     align-items: center;
-    position: absolute;
+    position: fixed;
     padding: 20 px;
     left: 0;
     top: 0;
@@ -82,28 +82,35 @@ footer {
 @media (max-width: 768px) {
     main {
         flex-direction: column;
-        height: auto;
+        height: 100vh;
+    }
+
+    header {
+        display: none !important;
     }
 
     .left-side {
-        position: relative;
+        position: fixed;
         width: 100vw;
-        height: 50vh;
+        height: 50vh !important;
         padding: 0px;
-        margin-right: 0;
-        margin-right: 0;
+        margin-bottom: 50vh;
+        text-align: center;
+
     }
 
     .right-side {
+        position: fixed;
         width: 100vw;
-        height: 50vh;
-        margin-left: 0;
-        padding: 20px;
+        height: 50vh !important;
+        margin-top: 50vh;
     }
+    
 
     footer {
         width: 100vw;
         margin-left: 0;
         text-align: center;
+        position: fixed;
     }
-}
+};
