@@ -23,7 +23,13 @@ export function Home() {
         </div>
       </div>
       </div>
-      
+      <footer>
+  <div className="footer">
+    <div className="container">
+            <p>Miles Johnson: <a href = "https://github.com/kilom3ters/cs260startup/tree/main"> GitHub Repository</a></p>
+          </div>
+    </div>
+    </footer>
     </main>
   );
 }

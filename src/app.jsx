@@ -16,14 +16,6 @@ export default function App() {
  <Route path='/user' element={<User />} />
  <Route path='*' element={<NotFound />} />
 </Routes>
-
-<footer>
-  <div className="footer">
-    <div className="container">
-            <p>Miles Johnson: <a href = "https://github.com/kilom3ters/cs260startup/tree/main"> GitHub Repository</a></p>
-          </div>
-    </div>
-    </footer>
 </div>
 </BrowserRouter>
   );

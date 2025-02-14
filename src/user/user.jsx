@@ -25,10 +25,10 @@
             <hr />
             <ul className="nav flex-column">
               <li className="nav-item">
-                <a className="nav-link text-white" href="#">Friends</a>
+                <a className="nav-link text-white w-100" href="#">Friends</a>
               </li>
               <li className="nav-item">
-                <button className="nav-link text-danger fw-bold btn btn-link" onClick={() => navigate('/')}>
+                <button className="logout-button w-100 text-danger fw-bold" onClick={() => navigate('/')}>
                   Log Out
                 </button>
               </li>
@@ -100,7 +100,7 @@
 
 
 <div className="row my-4 justify-content-center">
-  <div className="col-md-8 col-lg-6 text-center"> 
+
     <h3>Recent Games</h3>
     <ul className="list-group mx-auto w-100" style={{ maxWidth: "500px" }}>
       <li className="list-group-item">Life is Strange</li>
@@ -120,7 +120,7 @@
             </div>
           </div>
         </div> 
-      </div> 
+
 
   );
 }
