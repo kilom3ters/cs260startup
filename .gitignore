@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*
+!.env.example
+
+# Build directories
+dist/
+build/
+out/
+.next/
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IDE - JetBrains
+.idea/
+*.iml
+
+# IDE - Other
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+*.log
+
+# Lock files (except package-lock.json)
+yarn.lock
+pnpm-lock.yaml
+
+# Coverage
+coverage/
+
+# Cache
+.cache/
+.temp/
+
+# Optional eslint cache
+.eslintcache
+
