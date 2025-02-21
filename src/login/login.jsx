@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { saveUser, validateLogin } from "./login.js"
+import { saveUser, validateLogin } from "./login-functions.js"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./login-styles.css";
 
