@@ -115,9 +115,6 @@ export function Login() {
                 </div>
                 <div className="btn-container">
                   <button type="submit" className="btn btn-dark">Login</button>
-                  <p className="mt-3">
-                    <a href="#" className="text-dark">Forgot password?</a>
-                  </p>
                   <button onClick={() => navigate('/user')} className="btn btn-outline-dark skip-login">Skip Login</button>
                 </div>
               </form>

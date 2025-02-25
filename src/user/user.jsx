@@ -1,126 +1,282 @@
-  import React from 'react';
-  import { useNavigate } from 'react-router-dom';
-  import './user-styles.css';
-  
-  export function User() {
-    const navigate = useNavigate();
-  
-    return (
-   
-      
-      <div>
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './user-styles.css';
+
+export function User() {
+  const navigate = useNavigate();
+
+  // Default categories to use if nothing is stored in localStorage.
+  const defaultCategories = [
+    {
+      name: 'Must Play Games',
+      items: [
+        { name: 'Resident Evil 4', image: 'assets/images/resident-evil-4.jpg' }
+      ]
+    },
+    {
+      name: 'To Play',
+      items: [
+        { name: 'Mass Effect 2', image: 'assets/images/mass-effect-2.jpg' }
+      ]
+    },
+    {
+      name: 'Favorites',
+      items: [
+        { name: 'Elden Ring', image: 'assets/images/elden-ring.jpg' },
+        { name: 'Resident Evil 4', image: 'assets/images/resident-evil-4.jpg' },
+        { name: 'The Binding of Isaac', image: 'assets/images/binding-of-isaac.jpg' }
+      ]
+    }
+  ];
+
+  // Initialize categories from localStorage (if available) or defaultCategories.
+  const [categories, setCategories] = useState(() => {
+    const stored = localStorage.getItem('gameCategories');
+    if (stored) {
+      return JSON.parse(stored);
+    } else {
+      localStorage.setItem('gameCategories', JSON.stringify(defaultCategories));
+      return defaultCategories;
+    }
+  });
+
+  // Store the index of the currently selected category.
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+
+  // Update localStorage whenever categories state changes.
+  useEffect(() => {
+    localStorage.setItem('gameCategories', JSON.stringify(categories));
+  }, [categories]);
+
+  // Inline styles for the horizontal category list.
+  const categoryListStyle = {
+    display: 'flex',
+    overflowX: 'auto',
+    padding: '10px',
+    borderBottom: '1px solid #ccc',
+    marginBottom: '20px',
+    maxWidth: '400px',  // Only a few categories visible at a time
+    margin: '0 auto'
+  };
+
+  // Style for each category name (changes if selected).
+  const categoryItemStyle = (isSelected) => ({
+    padding: '10px 20px',
+    marginRight: '10px',
+    cursor: 'pointer',
+    backgroundColor: isSelected ? '#007bff' : '#f7f7f7',
+    color: isSelected ? '#fff' : '#000',
+    borderRadius: '5px',
+    whiteSpace: 'nowrap'
+  });
+
+  // Inline styles for the items container.
+  const itemListStyle = {
+    display: 'flex',
+    overflowX: 'auto',
+    padding: '10px',
+    maxWidth: '400px', // Only a few items visible at a time
+    margin: '0 auto'
+  };
+
+  // Style for each game item card.
+  const itemStyle = {
+    minWidth: '150px',
+    marginRight: '10px',
+    textAlign: 'center',
+    background: '#f7f7f7',
+    borderRadius: '5px',
+    padding: '10px'
+  };
+
+  // Handler to add a new category.
+  const handleAddCategory = () => {
+    const newCategoryName = prompt("Enter new category name:");
+    if (newCategoryName) {
+      const newCategory = { name: newCategoryName, items: [] };
+      const updatedCategories = [...categories, newCategory];
+      setCategories(updatedCategories);
+      // Set the newly added category as the selected one.
+      setSelectedCategoryIndex(updatedCategories.length - 1);
+    }
+  };
+
+  // Handler to add a new item (game) to the selected category.
+  const handleAddItem = () => {
+    const itemName = prompt("Enter new item (game) name:");
+    const itemImage = prompt("Enter the URL for the item image:");
+    if (itemName && itemImage) {
+      const newItem = { name: itemName, image: itemImage };
+      setCategories((prevCategories) => {
+        const updatedCategories = [...prevCategories];
+        // Create a new copy of the selected category object.
+        const updatedCategory = { 
+          ...updatedCategories[selectedCategoryIndex],
+          items: [...updatedCategories[selectedCategoryIndex].items, newItem]
+        };
+        updatedCategories[selectedCategoryIndex] = updatedCategory;
+        return updatedCategories;
+      });
+    }
+  };
+
+  // Get the currently selected category.
+  const selectedCategory = categories[selectedCategoryIndex];
+
+  return (
+    <div>
+      {/* Navigation Bar */}
       <nav className="navbar-user bg-white">
-            <form className="d-flex ms-auto" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search Users" aria-label="Search" />
-              <button className="btn btn-outline-dark" type="submit">Search</button>
-            </form>
-        </nav>
-        <div className="row">
-          <div className="col-md-3 col-lg-2 bg-black text-white vh-100 p-3 sidebar">
-            <div className="text-center">
-              <img src="assets/images/IMG_0868.JPG" width="100" alt="User Profile" />
-              <h4>Nathanael Tate Cotton</h4>
-              <button className="btn btn-light w-100 mt-2">+ Add Friend</button>
+        <form className="d-flex ms-auto" role="search">
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Search Users"
+            aria-label="Search"
+          />
+          <button className="btn btn-outline-dark" type="submit">
+            Search
+          </button>
+        </form>
+      </nav>
+
+      <div className="row">
+        {/* Sidebar */}
+        <div className="col-md-3 col-lg-2 bg-black text-white vh-100 p-3 sidebar">
+          <div className="text-center">
+            <img src="assets/images/IMG_0868.JPG" width="100" alt="User Profile" />
+            <h4>Nathanael Tate Cotton</h4>
+            <button className="btn btn-light w-100 mt-2">+ Add Friend</button>
+          </div>
+          <hr />
+          <ul className="nav flex-column">
+            <li className="nav-item">
+              <a className="nav-link text-white w-100" href="#">
+                Friends
+              </a>
+            </li>
+            <li className="nav-item">
+              <button
+                className="logout-button w-100 text-danger fw-bold"
+                onClick={() => navigate('/')}
+              >
+                Log Out
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        {/* Main Content */}
+        <div className="main-content-user">
+          {/* Welcome and Stats */}
+          <div className="row my-4">
+            <div className="col-12 text-center">
+              <h1>Welcome, Nathanael Tate Cotton</h1>
             </div>
-            <hr />
-            <ul className="nav flex-column">
-              <li className="nav-item">
-                <a className="nav-link text-white w-100" href="#">Friends</a>
-              </li>
-              <li className="nav-item">
-                <button className="logout-button w-100 text-danger fw-bold" onClick={() => navigate('/')}>
-                  Log Out
-                </button>
-              </li>
-            </ul>
           </div>
 
-
-            <div className="main-content-user">
-
-            <div className="row my-4">
-              <div className="col-12 text-center">
-                <h1>Welcome, Nathanael Tate Cotton</h1>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="card bg-black text-white text-center p-3">
+                <h4>Games This Month</h4>
+                <p className="fs-3">3</p>
               </div>
             </div>
-
-            <div className="row">
-              <div className="col-md-4">
-                <div className="card bg-black text-white text-center p-3">
-                  <h4>Games This Month</h4>
-                  <p className="fs-3">3</p>
+            <div className="col-md-4">
+              <div className="card text-center text-black p-3">
+                <h4>Favorite Game</h4>
+                <div className="align-items-center">
+                  <img src="assets/images/gfkart.webp" width="100" alt="Favorite Game" />
                 </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card text-center text-black p-3">
-                  <h4>Favorite Game</h4>
-                  <div className="align-items-center">
-                    <img src="assets/images/gfkart.webp" width="100" alt="Favorite Game" />
-                  </div>
-                  <small>Garfield Kart Furious Racing</small>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card bg-black text-white text-center p-3">
-                  <h4>Total Games</h4>
-                  <p className="fs-3">98</p>
-                </div>
+                <small>Garfield Kart Furious Racing</small>
               </div>
             </div>
-
-            <div className="row my-4 justify-content-center">
-  <div className="col-md-10 col-lg-8 mx-auto text-center"> 
-    <h3>Game Lists</h3>
-    <div className="table-responsive">
-      <table className="table table-black table-striped text-center mx-auto"> 
-        <tbody>
-          <tr><td>Must Play Games</td><td>Resident Evil 4</td></tr>
-          <tr><td>To-Play List</td><td>Mass Effect 2</td></tr>
-          <tr><td>Did Not Finish</td><td>Elden Ring</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<div className="row my-4 justify-content-center">
-  <div className="col-md-10 col-lg-8 mx-auto text-center">
-    <h3>Friends</h3>
-    <div className="table-responsive">
-      <table className="table table-striped text-center mx-auto">
-        <tbody>
-          <tr><td>Bob Dylan</td></tr>
-          <tr><td>Taylor Swift</td></tr>
-          <tr><td>Katy Perry</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-
-<div className="row my-4 justify-content-center">
-
-    <h3>Recent Games</h3>
-    <ul className="list-group mx-auto w-100" style={{ maxWidth: "500px" }}>
-      <li className="list-group-item">Life is Strange</li>
-      <li className="list-group-item">The Fox in the Forest</li>
-      <li className="list-group-item">Balatro</li>
-      <li className="list-group-item">Hades II</li>
-      <li className="list-group-item">Soma</li>
-      <li className="list-group-item">Outlast</li>
-    </ul>
-    <a href="#" className="d-block text-center mt-2">See all games</a>
-
-
-                <div className="logout-button">
-                  <button onClick={() => navigate('/')} className="btn btn-dark btn-lg w-100 mb-3">Logout</button>
-                </div>
+            <div className="col-md-4">
+              <div className="card bg-black text-white text-center p-3">
+                <h4>Total Games</h4>
+                <p className="fs-3">98</p>
               </div>
             </div>
           </div>
-        </div> 
 
+          {/* Interactive Category Section */}
+          <div className="row my-4 justify-content-center">
+            <div className="col-12">
+              <h3>GameLogs</h3>
+              {/* Horizontal list of category names */}
+              <div style={categoryListStyle}>
+                {categories.map((category, index) => {
+                  const isSelected = selectedCategoryIndex === index;
+                  return (
+                    <div
+                      key={index}
+                      style={categoryItemStyle(isSelected)}
+                      onClick={() => setSelectedCategoryIndex(index)}
+                    >
+                      {category.name}
+                    </div>
+                  );
+                })}
+                {/* Option to add a new category */}
+                <div style={categoryItemStyle(false)} onClick={handleAddCategory}>
+                  + Add Category
+                </div>
+              </div>
 
+              {/* Display items for the selected category */}
+              <h4 style={{ marginTop: '20px' }}>{selectedCategory.name}</h4>
+              <div style={itemListStyle}>
+                {selectedCategory.items.length > 0 ? (
+                  selectedCategory.items.map((item, index) => (
+                    <div key={index} style={itemStyle}>
+                      <img src={item.image} alt={item.name} width="100" />
+                      <p>{item.name}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No items in this category.</p>
+                )}
+              </div>
+              {/* Button to add a new item to the selected category */}
+              <button onClick={handleAddItem} style={{ marginTop: '10px' }}>
+                + Add Item
+              </button>
+            </div>
+          </div>
+
+          {/* Friends List */}
+          <div className="row my-4 justify-content-center">
+            <div className="col-md-10 col-lg-8 mx-auto text-center">
+              <h3>Friends</h3>
+              <div className="table-responsive">
+                <table className="table table-striped text-center mx-auto">
+                  <tbody>
+                    <tr>
+                      <td>Bob Dylan</td>
+                    </tr>
+                    <tr>
+                      <td>Taylor Swift</td>
+                    </tr>
+                    <tr>
+                      <td>Katy Perry</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* Logout */}
+          <div className="logout-button">
+            <button
+              onClick={() => navigate('/')}
+              className="btn btn-dark btn-lg w-100 mb-3"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
