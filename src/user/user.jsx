@@ -5,7 +5,8 @@ import './user-styles.css';
 export function User() {
   const navigate = useNavigate();
 
-  // Default categories to use if nothing is stored in localStorage.
+  const userName = localStorage.getItem("username") || "Nathanael Tate Cotton";
+
   const defaultCategories = [
     {
       name: 'Must Play Games',
@@ -29,7 +30,6 @@ export function User() {
     }
   ];
 
-  // Initialize categories from localStorage (if available) or defaultCategories.
   const [categories, setCategories] = useState(() => {
     const stored = localStorage.getItem('gameCategories');
     if (stored) {
@@ -40,26 +40,22 @@ export function User() {
     }
   });
 
-  // Store the index of the currently selected category.
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
 
-  // Update localStorage whenever categories state changes.
   useEffect(() => {
     localStorage.setItem('gameCategories', JSON.stringify(categories));
   }, [categories]);
 
-  // Inline styles for the horizontal category list.
   const categoryListStyle = {
     display: 'flex',
     overflowX: 'auto',
     padding: '10px',
     borderBottom: '1px solid #ccc',
     marginBottom: '20px',
-    maxWidth: '400px',  // Only a few categories visible at a time
+    maxWidth: '400px', 
     margin: '0 auto'
   };
 
-  // Style for each category name (changes if selected).
   const categoryItemStyle = (isSelected) => ({
     padding: '10px 20px',
     marginRight: '10px',
@@ -70,16 +66,15 @@ export function User() {
     whiteSpace: 'nowrap'
   });
 
-  // Inline styles for the items container.
   const itemListStyle = {
     display: 'flex',
     overflowX: 'auto',
     padding: '10px',
-    maxWidth: '400px', // Only a few items visible at a time
+    maxWidth: '400px', 
     margin: '0 auto'
   };
 
-  // Style for each game item card.
+
   const itemStyle = {
     minWidth: '150px',
     marginRight: '10px',
@@ -89,7 +84,6 @@ export function User() {
     padding: '10px'
   };
 
-  // Handler to add a new category.
   const handleAddCategory = () => {
     const newCategoryName = prompt("Enter new category name:");
     if (newCategoryName) {
@@ -100,7 +94,6 @@ export function User() {
     }
   };
 
-  // Handler to add a new item (game) to the selected category.
   const handleAddItem = () => {
     const itemName = prompt("Enter new item (game) name:");
     const itemImage = prompt("Enter the URL for the item image:");
@@ -118,18 +111,14 @@ export function User() {
     }
   };
 
-  // Get the currently selected category.
   const selectedCategory = categories[selectedCategoryIndex];
 
-  // ----- New Friend List Section -----
-  // Define a static array of friend objects. In the future this could be dynamic.
   const friends = [
     { name: 'Bob Dylan', image: 'assets/images/friend-bob.jpg' },
     { name: 'Taylor Swift', image: 'assets/images/friend-taylor.jpg' },
     { name: 'Katy Perry', image: 'assets/images/friend-katy.jpg' }
   ];
 
-  // Styles for horizontal scrolling friend list.
   const friendListStyle = {
     display: 'flex',
     overflowX: 'auto',
@@ -148,16 +137,12 @@ export function User() {
     cursor: 'pointer'
   };
 
-  // Handler when a friend is clicked.
   const handleFriendClick = (friend) => {
-    // For now, we'll log to the console. In the future, navigate to the friend's user page.
     console.log('Clicked friend:', friend.name);
-    // Example: navigate(`/user/${friend.name}`);
   };
 
   return (
     <div>
-      {/* Navigation Bar */}
       <nav className="navbar-user bg-white">
         <form className="d-flex ms-auto" role="search">
           <input
@@ -173,11 +158,10 @@ export function User() {
       </nav>
 
       <div className="row">
-        {/* Sidebar */}
         <div className="col-md-3 col-lg-2 bg-black text-white vh-100 p-3 sidebar">
           <div className="text-center">
             <img src="assets/images/IMG_0868.JPG" width="100" alt="User Profile" />
-            <h4>Nathanael Tate Cotton</h4>
+            <h4>{userName}</h4>
             <button className="btn btn-light w-100 mt-2">+ Add Friend</button>
           </div>
           <hr />
@@ -198,12 +182,10 @@ export function User() {
           </ul>
         </div>
 
-        {/* Main Content */}
         <div className="main-content-user">
-          {/* Welcome and Stats */}
           <div className="row my-4">
             <div className="col-12 text-center">
-              <h1>Welcome, Nathanael Tate Cotton</h1>
+              <h1>Welcome, {userName}</h1>
             </div>
           </div>
 
@@ -231,11 +213,9 @@ export function User() {
             </div>
           </div>
 
-          {/* Interactive Category Section */}
           <div className="row my-4 justify-content-center">
             <div className="col-12">
               <h3>GameLogs</h3>
-              {/* Horizontal list of category names */}
               <div style={categoryListStyle}>
                 {categories.map((category, index) => {
                   const isSelected = selectedCategoryIndex === index;
@@ -249,13 +229,11 @@ export function User() {
                     </div>
                   );
                 })}
-                {/* Option to add a new category */}
                 <div style={categoryItemStyle(false)} onClick={handleAddCategory}>
                   + Add Category
                 </div>
               </div>
 
-              {/* Display items for the selected category */}
               <h4 style={{ marginTop: '20px' }}>{selectedCategory.name}</h4>
               <div style={itemListStyle}>
                 {selectedCategory.items.length > 0 ? (
@@ -269,14 +247,12 @@ export function User() {
                   <p>No items in this category.</p>
                 )}
               </div>
-              {/* Button to add a new item to the selected category */}
               <button onClick={handleAddItem} style={{ marginTop: '10px' }}>
                 + Add Item
               </button>
             </div>
           </div>
 
-          {/* Horizontal Friends List Section */}
           <div className="row my-4 justify-content-center">
             <div className="col-12">
               <h3>Friends</h3>
@@ -295,7 +271,6 @@ export function User() {
             </div>
           </div>
 
-          {/* Logout */}
           <div className="logout-button">
             <button
               onClick={() => navigate('/')}

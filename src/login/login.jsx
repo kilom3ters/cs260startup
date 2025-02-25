@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { saveUser, validateLogin } from "./login-functions.js"
+import { saveUser, validateLogin } from "./login-functions.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./login-styles.css";
 
@@ -17,20 +17,24 @@ export function Login() {
   const [signupError, setSignupError] = useState("");
 
   function handleLoginSubmit(event) {
+
     const validationError = validateLogin(loginUsername, loginPassword);
     if (validationError) {
       setLoginError(validationError);
       return;
     }
-    saveUser(loginUsername, loginPassword); 
-    navigate("/user"); 
+
+    saveUser(loginUsername, loginPassword);
+    navigate("/user");
   }
 
   function handleSignupSubmit(event) {
+
     if (signupPassword !== confirmPassword) {
       setSignupError("Passwords do not match.");
       return;
     }
+
     saveUser(signupUsername, signupPassword);
     navigate("/user");
   }
