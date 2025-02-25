@@ -96,7 +96,6 @@ export function User() {
       const newCategory = { name: newCategoryName, items: [] };
       const updatedCategories = [...categories, newCategory];
       setCategories(updatedCategories);
-      // Set the newly added category as the selected one.
       setSelectedCategoryIndex(updatedCategories.length - 1);
     }
   };
@@ -109,7 +108,6 @@ export function User() {
       const newItem = { name: itemName, image: itemImage };
       setCategories((prevCategories) => {
         const updatedCategories = [...prevCategories];
-        // Create a new copy of the selected category object.
         const updatedCategory = { 
           ...updatedCategories[selectedCategoryIndex],
           items: [...updatedCategories[selectedCategoryIndex].items, newItem]
@@ -122,6 +120,40 @@ export function User() {
 
   // Get the currently selected category.
   const selectedCategory = categories[selectedCategoryIndex];
+
+  // ----- New Friend List Section -----
+  // Define a static array of friend objects. In the future this could be dynamic.
+  const friends = [
+    { name: 'Bob Dylan', image: 'assets/images/friend-bob.jpg' },
+    { name: 'Taylor Swift', image: 'assets/images/friend-taylor.jpg' },
+    { name: 'Katy Perry', image: 'assets/images/friend-katy.jpg' }
+  ];
+
+  // Styles for horizontal scrolling friend list.
+  const friendListStyle = {
+    display: 'flex',
+    overflowX: 'auto',
+    padding: '10px',
+    maxWidth: '400px',
+    margin: '0 auto'
+  };
+
+  const friendItemStyle = {
+    minWidth: '120px',
+    marginRight: '10px',
+    textAlign: 'center',
+    background: '#f7f7f7',
+    borderRadius: '5px',
+    padding: '10px',
+    cursor: 'pointer'
+  };
+
+  // Handler when a friend is clicked.
+  const handleFriendClick = (friend) => {
+    // For now, we'll log to the console. In the future, navigate to the friend's user page.
+    console.log('Clicked friend:', friend.name);
+    // Example: navigate(`/user/${friend.name}`);
+  };
 
   return (
     <div>
@@ -244,24 +276,21 @@ export function User() {
             </div>
           </div>
 
-          {/* Friends List */}
+          {/* Horizontal Friends List Section */}
           <div className="row my-4 justify-content-center">
-            <div className="col-md-10 col-lg-8 mx-auto text-center">
+            <div className="col-12">
               <h3>Friends</h3>
-              <div className="table-responsive">
-                <table className="table table-striped text-center mx-auto">
-                  <tbody>
-                    <tr>
-                      <td>Bob Dylan</td>
-                    </tr>
-                    <tr>
-                      <td>Taylor Swift</td>
-                    </tr>
-                    <tr>
-                      <td>Katy Perry</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div style={friendListStyle}>
+                {friends.map((friend, index) => (
+                  <div
+                    key={index}
+                    style={friendItemStyle}
+                    onClick={() => handleFriendClick(friend)}
+                  >
+                    <img src={friend.image} alt={friend.name} width="80" style={{ borderRadius: '50%' }} />
+                    <p>{friend.name}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
