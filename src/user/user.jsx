@@ -5,7 +5,23 @@ import './user-styles.css';
 export function User() {
   const navigate = useNavigate();
 
+  const userName = localStorage.getItem("username") || "Nathanael Tate Cotton";
+
+  const [profilePic, setProfilePic] = useState(() => localStorage.getItem("profilePic") || "assets/images/IMG_0868.JPG");
+  const [favoriteGame, setFavoriteGame] = useState(() => {
+    const stored = localStorage.getItem("favoriteGame");
+    return stored ? JSON.parse(stored) : { image: "assets/images/gfkart.webp", name: "Garfield Kart Furious Racing" };
+  });
+
   const defaultCategories = [
+    {
+      name: 'Favorites',
+      items: [
+        { name: 'Elden Ring', image: 'assets/images/elden-ring.jpg' },
+        { name: 'Resident Evil 4', image: 'assets/images/resident-evil-4.jpg' },
+        { name: 'The Binding of Isaac', image: 'assets/images/binding-of-isaac.jpg' }
+      ]
+    },
     {
       name: 'Must Play Games',
       items: [
@@ -16,14 +32,6 @@ export function User() {
       name: 'To Play',
       items: [
         { name: 'Mass Effect 2', image: 'assets/images/mass-effect-2.jpg' }
-      ]
-    },
-    {
-      name: 'Favorites',
-      items: [
-        { name: 'Elden Ring', image: 'assets/images/elden-ring.jpg' },
-        { name: 'Resident Evil 4', image: 'assets/images/resident-evil-4.jpg' },
-        { name: 'The Binding of Isaac', image: 'assets/images/binding-of-isaac.jpg' }
       ]
     }
   ];
@@ -43,6 +51,24 @@ export function User() {
   useEffect(() => {
     localStorage.setItem('gameCategories', JSON.stringify(categories));
   }, [categories]);
+
+  const handleEditProfilePic = () => {
+    const newPic = prompt("Enter new profile picture URL:", profilePic);
+    if(newPic) {
+      setProfilePic(newPic);
+      localStorage.setItem("profilePic", newPic);
+    }
+  };
+
+  const handleEditFavoriteGame = () => {
+    const newName = prompt("Enter new favorite game name:", favoriteGame.name);
+    const newImage = prompt("Enter new favorite game image URL:", favoriteGame.image);
+    if(newName && newImage) {
+      const newFav = { name: newName, image: newImage };
+      setFavoriteGame(newFav);
+      localStorage.setItem("favoriteGame", JSON.stringify(newFav));
+    }
+  };
 
   const categoryListStyle = {
     display: 'flex',
@@ -168,43 +194,32 @@ export function User() {
     console.log('Clicked friend:', friend.name);
   };
 
-  const userName = localStorage.getItem("username") || "Nathanael Tate Cotton";
-
   return (
     <div>
       <nav className="navbar-user bg-white">
         <form className="d-flex ms-auto" role="search">
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search Users"
-            aria-label="Search"
-          />
-          <button className="btn btn-outline-dark" type="submit">
-            Search
-          </button>
+          <input className="form-control me-2" type="search" placeholder="Search Users" aria-label="Search" />
+          <button className="btn btn-outline-dark" type="submit">Search</button>
         </form>
       </nav>
 
       <div className="row">
         <div className="col-md-3 col-lg-2 bg-black text-white vh-100 p-3 sidebar">
           <div className="text-center">
-            <img src="assets/images/IMG_0868.JPG" width="100" alt="User Profile" />
+            <img src={profilePic} width="100" alt="User Profile" style={{ cursor: 'pointer' }} onClick={handleEditProfilePic} />
             <h4>{userName}</h4>
             <button className="btn btn-light w-100 mt-2">+ Add Friend</button>
+            <p style={{ fontSize: '12px', cursor: 'pointer', color: '#ccc' }} onClick={handleEditProfilePic}>
+              Edit Picture
+            </p>
           </div>
           <hr />
           <ul className="nav flex-column">
             <li className="nav-item">
-              <a className="nav-link text-white w-100" href="#">
-                Friends
-              </a>
+              <a className="nav-link text-white w-100" href="#">Friends</a>
             </li>
             <li className="nav-item">
-              <button
-                className="logout-button w-100 text-danger fw-bold"
-                onClick={() => navigate('/')}
-              >
+              <button className="logout-button w-100 text-danger fw-bold" onClick={() => navigate('/')}>
                 Log Out
               </button>
             </li>
@@ -229,9 +244,12 @@ export function User() {
               <div className="card text-center text-black p-3">
                 <h4>Favorite Game</h4>
                 <div className="align-items-center">
-                  <img src="assets/images/gfkart.webp" width="100" alt="Favorite Game" />
+                  <img src={favoriteGame.image} width="100" alt="Favorite Game" style={{ cursor: 'pointer' }} onClick={handleEditFavoriteGame} />
                 </div>
-                <small>Garfield Kart Furious Racing</small>
+                <small>{favoriteGame.name}</small>
+                <p style={{ fontSize: '12px', cursor: 'pointer', color: '#007bff' }} onClick={handleEditFavoriteGame}>
+                  Edit Favorite Game
+                </p>
               </div>
             </div>
             <div className="col-md-4">
@@ -250,10 +268,7 @@ export function User() {
                   const isSelected = selectedCategoryIndex === index;
                   return (
                     <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
-                      <div
-                        style={categoryItemStyle(isSelected)}
-                        onClick={() => setSelectedCategoryIndex(index)}
-                      >
+                      <div style={categoryItemStyle(isSelected)} onClick={() => setSelectedCategoryIndex(index)}>
                         {category.name}
                       </div>
                       <button
@@ -327,11 +342,7 @@ export function User() {
               <h3>Friends</h3>
               <div style={friendListStyle}>
                 {friends.map((friend, index) => (
-                  <div
-                    key={index}
-                    style={friendItemStyle}
-                    onClick={() => handleFriendClick(friend)}
-                  >
+                  <div key={index} style={friendItemStyle} onClick={() => handleFriendClick(friend)}>
                     <img src={friend.image} alt={friend.name} width="80" style={{ borderRadius: '50%' }} />
                     <p>{friend.name}</p>
                   </div>
@@ -341,10 +352,7 @@ export function User() {
           </div>
 
           <div className="logout-button">
-            <button
-              onClick={() => navigate('/')}
-              className="btn btn-dark btn-lg w-100 mb-3"
-            >
+            <button onClick={() => navigate('/')} className="btn btn-dark btn-lg w-100 mb-3">
               Logout
             </button>
           </div>
