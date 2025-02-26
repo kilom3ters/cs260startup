@@ -5,8 +5,6 @@ import './user-styles.css';
 export function User() {
   const navigate = useNavigate();
 
-  const userName = localStorage.getItem("username") || "Nathanael Tate Cotton";
-
   const defaultCategories = [
     {
       name: 'Must Play Games',
@@ -52,7 +50,7 @@ export function User() {
     padding: '10px',
     borderBottom: '1px solid #ccc',
     marginBottom: '20px',
-    maxWidth: '400px', 
+    maxWidth: '400px',
     margin: '0 auto'
   };
 
@@ -63,17 +61,17 @@ export function User() {
     backgroundColor: isSelected ? '#007bff' : '#f7f7f7',
     color: isSelected ? '#fff' : '#000',
     borderRadius: '5px',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    position: 'relative'
   });
 
   const itemListStyle = {
     display: 'flex',
     overflowX: 'auto',
     padding: '10px',
-    maxWidth: '400px', 
+    maxWidth: '400px',
     margin: '0 auto'
   };
-
 
   const itemStyle = {
     minWidth: '150px',
@@ -81,7 +79,8 @@ export function User() {
     textAlign: 'center',
     background: '#f7f7f7',
     borderRadius: '5px',
-    padding: '10px'
+    padding: '10px',
+    position: 'relative'
   };
 
   const handleAddCategory = () => {
@@ -91,6 +90,18 @@ export function User() {
       const updatedCategories = [...categories, newCategory];
       setCategories(updatedCategories);
       setSelectedCategoryIndex(updatedCategories.length - 1);
+    }
+  };
+
+  const handleDeleteCategory = (index) => {
+    if (window.confirm("Are you sure you want to delete this category?")) {
+      const updatedCategories = categories.filter((_, i) => i !== index);
+      setCategories(updatedCategories);
+      if (selectedCategoryIndex === index) {
+        setSelectedCategoryIndex(0);
+      } else if (selectedCategoryIndex > index) {
+        setSelectedCategoryIndex(selectedCategoryIndex - 1);
+      }
     }
   };
 
@@ -111,11 +122,27 @@ export function User() {
     }
   };
 
+  const handleDeleteItem = (itemIndex) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      setCategories((prevCategories) => {
+        const updatedCategories = [...prevCategories];
+        const updatedItems = updatedCategories[selectedCategoryIndex].items.filter(
+          (_, i) => i !== itemIndex
+        );
+        updatedCategories[selectedCategoryIndex] = {
+          ...updatedCategories[selectedCategoryIndex],
+          items: updatedItems
+        };
+        return updatedCategories;
+      });
+    }
+  };
+
   const selectedCategory = categories[selectedCategoryIndex];
 
   const friends = [
     { name: 'Bob Dylan', image: 'assets/images/friend-bob.jpg' },
-    { name: 'Taylor Swift', image: 'assets/images/friend-taylor.jpg' },
+    { name: 'Taylor Swift', image: 'assets/images/friend-taytay.jpg' },
     { name: 'Katy Perry', image: 'assets/images/friend-katy.jpg' }
   ];
 
@@ -140,6 +167,8 @@ export function User() {
   const handleFriendClick = (friend) => {
     console.log('Clicked friend:', friend.name);
   };
+
+  const userName = localStorage.getItem("username") || "Nathanael Tate Cotton";
 
   return (
     <div>
@@ -220,12 +249,34 @@ export function User() {
                 {categories.map((category, index) => {
                   const isSelected = selectedCategoryIndex === index;
                   return (
-                    <div
-                      key={index}
-                      style={categoryItemStyle(isSelected)}
-                      onClick={() => setSelectedCategoryIndex(index)}
-                    >
-                      {category.name}
+                    <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+                      <div
+                        style={categoryItemStyle(isSelected)}
+                        onClick={() => setSelectedCategoryIndex(index)}
+                      >
+                        {category.name}
+                      </div>
+                      <button
+                        style={{
+                          position: 'absolute',
+                          top: '0',
+                          right: '0',
+                          background: 'red',
+                          border: 'none',
+                          color: 'white',
+                          borderRadius: '50%',
+                          width: '20px',
+                          height: '20px',
+                          cursor: 'pointer',
+                          fontSize: '12px'
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteCategory(index);
+                        }}
+                      >
+                        x
+                      </button>
                     </div>
                   );
                 })}
@@ -238,9 +289,27 @@ export function User() {
               <div style={itemListStyle}>
                 {selectedCategory.items.length > 0 ? (
                   selectedCategory.items.map((item, index) => (
-                    <div key={index} style={itemStyle}>
+                    <div key={index} style={{ ...itemStyle, position: 'relative' }}>
                       <img src={item.image} alt={item.name} width="100" />
                       <p>{item.name}</p>
+                      <button
+                        style={{
+                          position: 'absolute',
+                          top: '5px',
+                          right: '5px',
+                          background: 'red',
+                          border: 'none',
+                          color: 'white',
+                          borderRadius: '50%',
+                          width: '20px',
+                          height: '20px',
+                          cursor: 'pointer',
+                          fontSize: '12px'
+                        }}
+                        onClick={() => handleDeleteItem(index)}
+                      >
+                        x
+                      </button>
                     </div>
                   ))
                 ) : (
