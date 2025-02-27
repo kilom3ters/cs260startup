@@ -230,9 +230,6 @@ export function User() {
           <hr />
           <ul className="nav flex-column">
             <li className="nav-item">
-              <a className="nav-link text-white w-100" href="#">Friends</a>
-            </li>
-            <li className="nav-item">
               <button className="logout-button w-100 text-danger fw-bold" onClick={() => navigate('/')}>
                 Log Out
               </button>
@@ -250,8 +247,8 @@ export function User() {
           <div className="row">
             <div className="col-md-4">
               <div className="card bg-black text-white text-center p-3">
-                <h4>Games This Month</h4>
-                <p className="fs-3">3</p>
+                <h4>GameLogs</h4>
+                <p className="fs-3">{categories.length}</p>
               </div>
             </div>
             <div className="col-md-4">
