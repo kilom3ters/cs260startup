@@ -47,10 +47,20 @@ export function User() {
   });
 
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
-
+  
   useEffect(() => {
     localStorage.setItem('gameCategories', JSON.stringify(categories));
   }, [categories]);
+
+  const [friends, setFriends] = useState(() => {
+    const stored = localStorage.getItem("friends");
+    return stored ? JSON.parse(stored) : [];
+  });
+  
+  useEffect(() => {
+    localStorage.setItem("friends", JSON.stringify(friends));
+  }, [friends]);
+  
 
   const handleEditProfilePic = () => {
     const newPic = prompt("Enter new profile picture URL:", profilePic);
@@ -164,13 +174,15 @@ export function User() {
     }
   };
 
-  const selectedCategory = categories[selectedCategoryIndex];
+  const handleAddFriend = () => {
+    const friendName = prompt("Enter your friend's name:");
+    const friendImage = prompt("Enter your friend's profile image URL:");
+    if (friendName && friendImage) {
+      setFriends([...friends, { name: friendName, image: friendImage }]);
+    }
+  };  
 
-  const friends = [
-    { name: 'Bob Dylan', image: 'assets/images/friend-bob.jpg' },
-    { name: 'Taylor Swift', image: 'assets/images/friend-taytay.jpg' },
-    { name: 'Katy Perry', image: 'assets/images/friend-katy.jpg' }
-  ];
+  const selectedCategory = categories[selectedCategoryIndex];
 
   const friendListStyle = {
     display: 'flex',
@@ -208,7 +220,9 @@ export function User() {
           <div className="text-center">
             <img src={profilePic} width="100" alt="User Profile" style={{ cursor: 'pointer' }} onClick={handleEditProfilePic} />
             <h4>{userName}</h4>
-            <button className="btn btn-light w-100 mt-2">+ Add Friend</button>
+            <button className="btn btn-light w-100 mt-2" onClick={handleAddFriend}>
+              + Add Friends
+              </button>
             <p style={{ fontSize: '12px', cursor: 'pointer', color: '#ccc' }} onClick={handleEditProfilePic}>
               Edit Picture
             </p>
@@ -337,18 +351,15 @@ export function User() {
             </div>
           </div>
 
-          <div className="row my-4 justify-content-center">
-            <div className="col-12">
-              <h3>Friends</h3>
-              <div style={friendListStyle}>
-                {friends.map((friend, index) => (
-                  <div key={index} style={friendItemStyle} onClick={() => handleFriendClick(friend)}>
-                    <img src={friend.image} alt={friend.name} width="80" style={{ borderRadius: '50%' }} />
+          <div style={friendListStyle}>
+                {friends.length > 0 ? (friends.map((friend, index) => (
+                  <div key={index} style={friendItemStyle}>
+                    <img src={friend.image} width="80" style={{ borderRadius: '50%' }} alt={friend.name} />
                     <p>{friend.name}</p>
                   </div>
-                ))}
-              </div>
-            </div>
+                  ))) : (
+                  <p>No friends added yet.</p>
+                  )}
           </div>
 
           <div className="logout-button">
