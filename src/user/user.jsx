@@ -7,34 +7,19 @@ export function User() {
 
   const userName = localStorage.getItem("username") || "Nathanael Tate Cotton";
 
-  const [profilePic, setProfilePic] = useState(() => localStorage.getItem("profilePic") || "assets/images/IMG_0868.JPG");
+  const [profilePic, setProfilePic] = useState(() => localStorage.getItem("profilePic") || "");
+  
   const [favoriteGame, setFavoriteGame] = useState(() => {
     const stored = localStorage.getItem("favoriteGame");
-    return stored ? JSON.parse(stored) : { image: "assets/images/gfkart.webp", name: "Garfield Kart Furious Racing" };
+    return stored ? JSON.parse(stored) : null;
   });
-
+  
   const defaultCategories = [
     {
-      name: 'Favorites',
-      items: [
-        { name: 'Elden Ring', image: 'assets/images/elden-ring.jpg' },
-        { name: 'Resident Evil 4', image: 'assets/images/resident-evil-4.jpg' },
-        { name: 'The Binding of Isaac', image: 'assets/images/binding-of-isaac.jpg' }
-      ]
-    },
-    {
-      name: 'Must Play Games',
-      items: [
-        { name: 'Resident Evil 4', image: 'assets/images/resident-evil-4.jpg' }
-      ]
-    },
-    {
-      name: 'To Play',
-      items: [
-        { name: 'Mass Effect 2', image: 'assets/images/mass-effect-2.jpg' }
-      ]
+      name: 'Played Games',
+      items: []
     }
-  ];
+  ];  
 
   const [categories, setCategories] = useState(() => {
     const stored = localStorage.getItem('gameCategories');
@@ -126,7 +111,7 @@ export function User() {
   };
 
   const handleAddCategory = () => {
-    const newCategoryName = prompt("Enter new category name:");
+    const newCategoryName = prompt("Enter new GameLog name:");
     if (newCategoryName) {
       const newCategory = { name: newCategoryName, items: [] };
       const updatedCategories = [...categories, newCategory];
@@ -136,7 +121,7 @@ export function User() {
   };
 
   const handleDeleteCategory = (index) => {
-    if (window.confirm("Are you sure you want to delete this category?")) {
+    if (window.confirm("Are you sure you want to delete this GameLog?")) {
       const updatedCategories = categories.filter((_, i) => i !== index);
       setCategories(updatedCategories);
       if (selectedCategoryIndex === index) {
@@ -148,7 +133,7 @@ export function User() {
   };
 
   const handleAddItem = () => {
-    const itemName = prompt("Enter new item (game) name:");
+    const itemName = prompt("Enter game (to log) name:");
     const itemImage = prompt("Enter the URL for the item image:");
     if (itemName && itemImage) {
       const newItem = { name: itemName, image: itemImage };
@@ -165,7 +150,7 @@ export function User() {
   };
 
   const handleDeleteItem = (itemIndex) => {
-    if (window.confirm("Are you sure you want to delete this item?")) {
+    if (window.confirm("Are you sure you want to delete this game?")) {
       setCategories((prevCategories) => {
         const updatedCategories = [...prevCategories];
         const updatedItems = updatedCategories[selectedCategoryIndex].items.filter(
@@ -214,24 +199,29 @@ export function User() {
 
   return (
     <div>
-      <nav className="navbar-user bg-white">
+      {/* <nav className="navbar-user bg-white">
         <form className="d-flex ms-auto" role="search">
           <input className="form-control me-2" type="search" placeholder="Search Users" aria-label="Search" />
           <button className="btn btn-outline-dark" type="submit">Search</button>
         </form>
-      </nav>
+      </nav> */}
 
       <div className="row">
         <div className="col-md-3 col-lg-2 bg-black text-white vh-100 p-3 sidebar">
           <div className="text-center">
-            <img src={profilePic} width="100" alt="User Profile" style={{ cursor: 'pointer' }} onClick={handleEditProfilePic} />
+          {profilePic ? (
+  <img src={profilePic} width="100" alt="User Profile" style={{ cursor: 'pointer' }} onClick={handleEditProfilePic} />
+) : (
+  <p style={{ cursor: 'pointer' }} onClick={handleEditProfilePic}>No Profile Picture Set</p>
+)}
+<p style={{ fontSize: '12px', cursor: 'pointer', color: '#ccc' }} onClick={handleEditProfilePic}>
+              {profilePic ? "Edit Profile Picture" : "Add Profile Picture"}
+            </p>
             <h4>{userName}</h4>
             <button className="btn btn-light w-100 mt-2" onClick={handleAddFriend}>
               + Add Friends
               </button>
-            <p style={{ fontSize: '12px', cursor: 'pointer', color: '#ccc' }} onClick={handleEditProfilePic}>
-              Edit Picture
-            </p>
+            
           </div>
           <hr />
           <ul className="nav flex-column">
@@ -261,12 +251,18 @@ export function User() {
               <div className="card text-center text-black p-3">
                 <h4>Favorite Game</h4>
                 <div className="align-items-center">
-                  <img src={favoriteGame.image} width="100" alt="Favorite Game" style={{ cursor: 'pointer' }} onClick={handleEditFavoriteGame} />
+                {favoriteGame ? (
+  <>
+    <img src={favoriteGame.image} width="100" alt="Favorite Game" style={{ cursor: 'pointer' }} onClick={handleEditFavoriteGame} />
+    <small>{favoriteGame.name}</small>
+  </>
+) : (
+  <p>No Favorite Game Set</p>)}
+<p style={{ fontSize: '12px', cursor: 'pointer', color: '#007bff' }} onClick={handleEditFavoriteGame}>
+    {favoriteGame ? "Edit Favorite Game" : "Add Favorite Game"}
+  </p>
+
                 </div>
-                <small>{favoriteGame.name}</small>
-                <p style={{ fontSize: '12px', cursor: 'pointer', color: '#007bff' }} onClick={handleEditFavoriteGame}>
-                  Edit Favorite Game
-                </p>
               </div>
             </div>
             <div className="col-md-4">
@@ -345,7 +341,7 @@ export function User() {
                     </div>
                   ))
                 ) : (
-                  <p>No items in this category.</p>
+                  <p>No games logged yet.</p>
                 )}
               </div>
               <button onClick={handleAddItem} style={{ marginTop: '10px' }}>
