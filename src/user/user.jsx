@@ -46,6 +46,12 @@ export function User() {
     }
   });
 
+  const getTotalUniqueGames = () => {
+    const allGames = categories.flatMap(category => category.items.map(item => item.name));
+    const uniqueGames = new Set(allGames);
+    return uniqueGames.size;
+  };
+  
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   
   useEffect(() => {
@@ -266,7 +272,7 @@ export function User() {
             <div className="col-md-4">
               <div className="card bg-black text-white text-center p-3">
                 <h4>Total Games</h4>
-                <p className="fs-3">98</p>
+                <p className="fs-3">{getTotalUniqueGames()}</p>
               </div>
             </div>
           </div>
