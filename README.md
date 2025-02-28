@@ -121,3 +121,19 @@ For this deliverable, I transitioned my application to a React-based architectur
 ### Future Implementations
 - **Database Integration**: Game lists and friend lists will be stored using database integration in the future.
 - **WebSocket Placeholder**: Future functionality will include real-time updates for user interactions between friends and friend's lists.
+
+## React Part 2 Deliverable
+
+For this deliverable, I made the following updates:
+
+### Features Implemented
+- **All functionality implemented or mocked out**  
+  - Local storage is used to store user data, stats, and game logs.  
+  - User profiles now properly save profile pictures, favorite games, and friends.
+
+- **Hooks (useState, useEffect, useRef)**
+  - Use of useEffect to update local storage when data changes.  
+  - **Dynamic UI updates**:
+    - Profile picture section dynamically shows "Add Profile Picture" if none is set.
+    - Favorite game section dynamically shows "Add Favorite Game" or "Edit Favorite Game".
+    - GameLogs now correctly track total unique games and display "No games logged yet" when empty.
