@@ -170,7 +170,8 @@ export function User() {
               </button>
             </div>
           </div>
-
+          
+          <h3>Friends</h3>
           <div className="friend-list">
             {friends.length > 0 ? (
               friends.map((friend, index) => (
