@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { saveUser, validateLogin } from "./login-functions.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./login-styles.css";
 
@@ -16,27 +15,54 @@ export function Login() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signupError, setSignupError] = useState("");
 
-  function handleLoginSubmit(event) {
+  async function handleLoginSubmit(event) {
+    event.preventDefault();
+    setLoginError("");
 
-    const validationError = validateLogin(loginUsername, loginPassword);
-    if (validationError) {
-      setLoginError(validationError);
-      return;
+    try {
+      const response = await fetch("/login", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: loginUsername, password: loginPassword }),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        navigate("/user");
+      } else {
+        setLoginError(data.msg);
+      }
+    } catch (error) {
+      setLoginError("Login failed. Please try again.");
     }
-
-    saveUser(loginUsername, loginPassword);
-    navigate("/user");
   }
 
-  function handleSignupSubmit(event) {
+  async function handleSignupSubmit(event) {
+    event.preventDefault();
+    setSignupError("");
 
     if (signupPassword !== confirmPassword) {
       setSignupError("Passwords do not match.");
       return;
     }
 
-    saveUser(signupUsername, signupPassword);
-    navigate("/user");
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: signupUsername, password: signupPassword }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        navigate("/user");
+      } else {
+        setSignupError(data.msg);
+      }
+    } catch (error) {
+      setSignupError("Signup failed. Please try again.");
+    }
   }
 
   return (
