@@ -64,6 +64,7 @@ async function handleSignupSubmit(event) {
 
       if (response.ok) {
           console.log("Signup Successful!", data);
+          localStorage.setItem("username", data.user);
           navigate("/user");
       } else {
           console.log("Signup Error:", data.msg);
