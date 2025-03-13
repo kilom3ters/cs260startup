@@ -1,15 +1,11 @@
-import express from 'express';
-import bcrypt from 'bcryptjs';
-import cookieParser from 'cookie-parser';
-import { v4 as uuidv4 } from 'uuid';
-import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import fetch from 'node-fetch'; 
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
+const { v4: uuidv4 } = require('uuid');
+const cors = require('cors');
+const path = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+const fetch = require('node-fetch');
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -18,7 +14,7 @@ app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 const passwords = {}; 
 const sessions = {}; 
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/quote', async (req, res) => {
   try {
@@ -40,7 +36,6 @@ app.get('/api/quote', async (req, res) => {
       res.status(500).json({ quote: "No quote available", author: "Unknown" });
   }
 });
-
 
 app.post('/register', async (req, res) => {
     const { user, password } = req.body;
@@ -93,7 +88,7 @@ app.get('/api/protected', authenticate, (req, res) => {
 });
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = 4000;
