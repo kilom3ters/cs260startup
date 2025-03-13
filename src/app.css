@@ -77,7 +77,6 @@ footer {
     right: 0;
     display: flex;
     justify-content: flex-end;
-    display: flex;
 }
 
 @media (max-width: 768px) {
@@ -97,7 +96,6 @@ footer {
         padding: 0px;
         margin-bottom: 80vh;
         text-align: center;
-
     }
 
     .right-side {
@@ -106,7 +104,6 @@ footer {
         height: 50vh !important;
         margin-top: 50vh;
     }
-    
 
     footer {
         width: 100vw;
@@ -114,4 +111,4 @@ footer {
         text-align: center;
         position: fixed;
     }
-};
+}
