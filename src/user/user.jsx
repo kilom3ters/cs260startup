@@ -16,56 +16,62 @@ import {
 export function User() {
   const navigate = useNavigate();
 
-  const userName = localStorage.getItem("username") || "Nathanael Tate Cotton";
-
+  // ✅ Keep all default localStorage states
   const [profilePic, setProfilePic] = useState(() => localStorage.getItem("profilePic") || "");
-  
   const [favoriteGame, setFavoriteGame] = useState(() => {
     const stored = localStorage.getItem("favoriteGame");
     return stored ? JSON.parse(stored) : null;
   });
-  
-  const defaultCategories = [
-    {
-      name: 'Played Games',
-      items: []
-    }
-  ];  
 
+  const defaultCategories = [{ name: 'Played Games', items: [] }];
   const [categories, setCategories] = useState(() => {
     const stored = localStorage.getItem('gameCategories');
-    if (stored) {
-      return JSON.parse(stored);
-    } else {
-      localStorage.setItem('gameCategories', JSON.stringify(defaultCategories));
-      return defaultCategories;
-    }
+    return stored ? JSON.parse(stored) : defaultCategories;
   });
-  
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
-  
-  useEffect(() => {
-    localStorage.setItem('gameCategories', JSON.stringify(categories));
-  }, [categories]);
 
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [friends, setFriends] = useState(() => {
     const stored = localStorage.getItem("friends");
     return stored ? JSON.parse(stored) : [];
   });
-  
+
+  // ✅ Replace only `userName` with API data
+  const [userName, setUserName] = useState(localStorage.getItem("username") || "Nathanael Tate Cotton");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const response = await fetch("/api/user", { credentials: "include" });
+        if (!response.ok) throw new Error("Unauthorized");
+
+        const data = await response.json();
+        setUserName(data.user.username); // ✅ Update only userName
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setUserName("Unknown User");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('gameCategories', JSON.stringify(categories));
+  }, [categories]);
+
   useEffect(() => {
     localStorage.setItem("friends", JSON.stringify(friends));
   }, [friends]);
 
-  const selectedCategory = categories[selectedCategoryIndex];
-
   async function handleLogout() {
     await fetch("/logout", { method: "POST", credentials: "include" });
-    console.log("Clearing localStorage...");
-    localStorage.removeItem("username"); 
-    localStorage.clear(); 
     navigate("/");
   }
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div>
@@ -157,10 +163,10 @@ export function User() {
                 </div>
               </div>
 
-              <h4>{selectedCategory.name}</h4>
+              <h4>{categories[selectedCategoryIndex].name}</h4>
               <div className="item-list">
-                {selectedCategory.items.length > 0 ? (
-                  selectedCategory.items.map((item, index) => (
+                {categories[selectedCategoryIndex].items.length > 0 ? (
+                  categories[selectedCategoryIndex].items.map((item, index) => (
                     <div key={index} className="item">
                       <img src={item.image} alt={item.name} width="100" />
                       <p>{item.name}</p>
@@ -177,26 +183,6 @@ export function User() {
                 + Add Item
               </button>
             </div>
-          </div>
-          
-          <h3>Friends</h3>
-          <div className="friend-list">
-            {friends.length > 0 ? (
-              friends.map((friend, index) => (
-                <div key={index} className="friend-item" onClick={() => handleFriendClick(friend)}>
-                  <img src={friend.image} width="80" className="profile-pic" alt={friend.name} />
-                  <p>{friend.name}</p>
-                </div>
-              ))
-            ) : (
-              <p>No friends added yet.</p>
-            )}
-          </div>
-
-          <div className="logout-button">
-            <button onClick={() => navigate('/')} className="btn btn-dark btn-lg w-100 mb-3">
-              Logout
-            </button>
           </div>
         </div>
       </div>

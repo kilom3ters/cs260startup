@@ -54,14 +54,16 @@ app.get('/api/quote', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     passwords[user] = hashedPassword;
 
-    users[user] = { 
-        username: user,
-        createdAt: new Date().toISOString(),
-    };
+    users[user] = { username: user, createdAt: new Date().toISOString() }; 
 
-    console.log("User Registered:", users[user]);
-    return res.json({ user });
+    const token = uuidv4();
+    sessions[token] = users[user];  
+    res.cookie('token', token, { secure: true, httpOnly: true, sameSite: 'strict' });
+
+    console.log("User Registered & Logged In:", users[user]);
+    return res.json({ user, token });
 });
+
 
 
 
