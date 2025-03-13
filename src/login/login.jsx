@@ -77,10 +77,11 @@ async function handleSignupSubmit(event) {
 }
 async function handleLogout() {
   await fetch("/logout", { method: "POST", credentials: "include" });
-  localStorage.removeItem("username");
+  console.log("Clearing localStorage...")
+  localStorage.removeItem("username"); 
+  localStorage.clear(); 
   navigate("/login");
 }
-
 
   return (
     <main className="container-fluid">

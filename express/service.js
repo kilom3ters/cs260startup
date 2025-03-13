@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fetch from 'node-fetch'; // ✅ Import `fetch` for making API calls
+import fetch from 'node-fetch'; 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
