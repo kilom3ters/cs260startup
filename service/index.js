@@ -4,8 +4,8 @@ const cookieParser = require('cookie-parser');
 const { v4: uuidv4 } = require('uuid');
 const cors = require('cors');
 const path = require('path');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const fetch = require('node-fetch');
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -14,28 +14,32 @@ app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 const passwords = {}; 
 const sessions = {}; 
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.get('/api/quote', async (req, res) => {
-  try {
-      console.log("Fetching quote from ZenQuotes API...");
-      const response = await fetch('https://zenquotes.io/api/random');
-
-      if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("API response data:", data);
-
-      if (!data[0].q || !data[0].a) throw new Error("Invalid API response");
-
-      res.json({ quote: data[0].q, author: data[0].a });
-  } catch (error) {
-      console.error("Error fetching quote:", error.message);
-      res.status(500).json({ quote: "No quote available", author: "Unknown" });
-  }
-});
+    try {
+        console.log("Fetching quote from ZenQuotes API...");
+  
+        const response = await fetch('https://zenquotes.io/api/random');
+  
+        console.log(`API Response Status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log("API Response Data:", data);
+  
+        if (!Array.isArray(data) || !data[0]?.q || !data[0]?.a) {
+            throw new Error("Invalid API response format");
+        }
+  
+        res.json({ quote: data[0].q, author: data[0].a });
+    } catch (error) {
+        console.error("Error fetching quote:", error.message);
+        res.status(500).json({ quote: "No quote available", author: "Unknown" });
+    }
+  });
+  
+  
 
 app.post('/register', async (req, res) => {
     const { user, password } = req.body;
@@ -86,6 +90,8 @@ function authenticate(req, res, next) {
 app.get('/api/protected', authenticate, (req, res) => {
     res.json({ msg: `Hello, ${req.user}! You are authenticated.` });
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
