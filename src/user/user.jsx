@@ -59,6 +59,14 @@ export function User() {
 
   const selectedCategory = categories[selectedCategoryIndex];
 
+  async function handleLogout() {
+    await fetch("/logout", { method: "POST", credentials: "include" });
+    console.log("Clearing localStorage...");
+    localStorage.removeItem("username"); 
+    localStorage.clear(); 
+    navigate("/");
+  }
+
   return (
     <div>
       <div className="row">
@@ -80,7 +88,7 @@ export function User() {
           <hr />
           <ul className="nav flex-column">
             <li className="nav-item">
-              <button className="logout-button" onClick={() => navigate('/')}>
+              <button className="logout-button" onClick={handleLogout}>
                 Log Out
               </button>
             </li>
