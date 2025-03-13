@@ -20,50 +20,60 @@ export function Login() {
     setLoginError("");
 
     try {
-      const response = await fetch("/login", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user: loginUsername, password: loginPassword }),
-        credentials: "include",
-      });
+        const response = await fetch("/login", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user: loginUsername, password: loginPassword }),
+            credentials: "include",
+        });
 
-      const data = await response.json();
-      if (response.ok) {
-        navigate("/user");
-      } else {
-        setLoginError(data.msg);
-      }
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log("Login Successful!", data);
+            navigate("/user"); 
+        } else {
+            console.log("Login Error:", data.msg);
+            setLoginError(data.msg);
+        }
     } catch (error) {
-      setLoginError("Login failed. Please try again.");
+        console.error("Login Failed:", error);
+        setLoginError("Server error. Please try again.");
     }
-  }
+}
 
-  async function handleSignupSubmit(event) {
-    event.preventDefault();
-    setSignupError("");
 
-    if (signupPassword !== confirmPassword) {
+async function handleSignupSubmit(event) {
+  event.preventDefault();
+  setSignupError("");
+
+  if (signupPassword !== confirmPassword) {
       setSignupError("Passwords do not match.");
       return;
-    }
+  }
 
-    try {
+  try {
       const response = await fetch("/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user: signupUsername, password: signupPassword }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user: signupUsername, password: signupPassword }),
       });
 
       const data = await response.json();
+
       if (response.ok) {
-        navigate("/user");
+          console.log("Signup Successful!", data);
+          navigate("/user");
       } else {
-        setSignupError(data.msg);
+          console.log("Signup Error:", data.msg);
+          setSignupError(data.msg);
       }
-    } catch (error) {
-      setSignupError("Signup failed. Please try again.");
-    }
+  } catch (error) {
+      console.error("Signup Failed:", error);
+      setSignupError("Server error. Please try again.");
   }
+}
+
 
   return (
     <main className="container-fluid">
