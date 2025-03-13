@@ -1,6 +1,7 @@
 {
   "name": "cs260startup",
   "version": "1.0.0",
+  "type": "module",
   "description": "### Elevator Pitch Do you keep track of your books read on *Goodreads* (or something similar) and the movies you watch on something like *Letterboxd*? Do you wish you could see what video games you have played and what you thought of them? This video game tracking application makes it so the user can record what games they have played, give it a score so they can see thought, and review the lists created by their friends. There is no other software exclusively for video game tracking like this.",
   "main": "index.js",
   "scripts": {
@@ -29,6 +30,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "mongodb": "^6.14.2",
+    "node-fetch": "^3.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.3.0",

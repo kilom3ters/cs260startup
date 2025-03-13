@@ -31,6 +31,7 @@ export function Login() {
 
         if (response.ok) {
             console.log("Login Successful!", data);
+            localStorage.setItem("username", data.user);
             navigate("/user"); 
         } else {
             console.log("Login Error:", data.msg);
@@ -72,6 +73,11 @@ async function handleSignupSubmit(event) {
       console.error("Signup Failed:", error);
       setSignupError("Server error. Please try again.");
   }
+}
+async function handleLogout() {
+  await fetch("/logout", { method: "POST", credentials: "include" });
+  localStorage.removeItem("username");
+  navigate("/login");
 }
 
 

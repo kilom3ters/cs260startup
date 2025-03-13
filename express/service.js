@@ -1,9 +1,14 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const cookieParser = require('cookie-parser');
-const uuid = require('uuid');
-const cors = require('cors');
-const path = require('path');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import cookieParser from 'cookie-parser';
+import { v4 as uuidv4 } from 'uuid';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fetch from 'node-fetch'; // ✅ Import `fetch` for making API calls
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
@@ -15,43 +20,55 @@ const sessions = {};
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+app.get('/api/quote', async (req, res) => {
+  try {
+      console.log("Fetching quote from ZenQuotes API...");
+      const response = await fetch('https://zenquotes.io/api/random');
+
+      if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("API response data:", data);
+
+      if (!data[0].q || !data[0].a) throw new Error("Invalid API response");
+
+      res.json({ quote: data[0].q, author: data[0].a });
+  } catch (error) {
+      console.error("Error fetching quote:", error.message);
+      res.status(500).json({ quote: "No quote available", author: "Unknown" });
+  }
+});
+
+
 app.post('/register', async (req, res) => {
-  const { user, password } = req.body;
+    const { user, password } = req.body;
+    if (!user || !password) return res.status(400).json({ msg: "Missing user or password" });
 
-  if (!user || !password) {
-      return res.status(400).json({ msg: "Missing user or password" });
-  }
+    if (passwords[user]) return res.status(400).json({ msg: "User already exists" });
 
-  if (passwords[user]) {
-      return res.status(400).json({ msg: "User already exists" });
-  }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    passwords[user] = hashedPassword;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  passwords[user] = hashedPassword;
-
-  console.log("User Registered:", user, "Password Hash:", hashedPassword);
-  return res.json({ user });
+    console.log("User Registered:", user);
+    return res.json({ user });
 });
 
 app.put('/login', async (req, res) => {
-  const { user, password } = req.body;
-  const hashedPassword = passwords[user];
+    const { user, password } = req.body;
+    const hashedPassword = passwords[user];
 
-  console.log("Attempting Login:", user);
-  console.log("Stored Users:", passwords);
+    if (hashedPassword && await bcrypt.compare(password, hashedPassword)) {
+        const token = uuidv4();
+        sessions[token] = user;
+        res.cookie('token', token, { secure: true, httpOnly: true, sameSite: 'strict' });
+        console.log("Login Successful:", user);
+        return res.json({ user, token });
+    }
 
-  if (hashedPassword && await bcrypt.compare(password, hashedPassword)) {
-      const token = uuid.v4();
-      sessions[token] = user;
-      res.cookie('token', token, { secure: true, httpOnly: true, sameSite: 'strict' });
-      console.log("Login Successful:", user, "Session Token:", token);
-      return res.json({ user, token });
-  }
-
-  console.log("Login Failed for:", user);
-  return res.status(401).json({ msg: 'Invalid user or password' });
+    return res.status(401).json({ msg: 'Invalid user or password' });
 });
-
 
 app.post('/logout', (req, res) => {
     const token = req.cookies?.token;
