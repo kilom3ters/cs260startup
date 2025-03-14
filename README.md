@@ -137,3 +137,18 @@ For this deliverable, I made the following updates:
     - Profile picture section dynamically shows "Add Profile Picture" if none is set.
     - Favorite game section dynamically shows "Add Favorite Game" or "Edit Favorite Game".
     - GameLogs now correctly track total unique games and display "No games logged yet" when empty.
+
+## Service Deliverable
+
+For this deliverable, I implemented a backend service that supports user authentication and integrates a third-party API for displaying quotes.
+
+### Features Implemented
+- **Node.js/Express HTTP service** - Created a backend service using Node.js and Express.
+- **Static middleware for frontend** - Configured Express to serve the frontend using static middleware.
+- **Calls to third-party endpoints** - Implemented a route that fetches quotes from an external API and displays them on the homepage.
+- **Backend service endpoints** - Implemented endpoints for:
+  - User registration
+  - User login
+  - Logout functionality
+- **Frontend calls service endpoints** - Used the fetch API in the frontend to interact with backend endpoints.
+- **Supports registration, login, logout, and restricted endpoints** - Implemented authentication using sessions and cookies.
