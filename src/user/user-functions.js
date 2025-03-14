@@ -27,7 +27,7 @@ export function getTotalUniqueGames(categories) {
     if (newCategoryName && !categories.some(category => category.name === newCategoryName)) {
       const newCategory = { name: newCategoryName, items: [] };
       setCategories(prevCategories => [...prevCategories, newCategory]);
-      setSelectedCategoryIndex(categories.length); // Select the new category
+      setSelectedCategoryIndex(categories.length);
       localStorage.setItem("gameCategories", JSON.stringify([...categories, newCategory]));
     }
   }

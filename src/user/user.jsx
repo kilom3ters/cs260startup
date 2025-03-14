@@ -16,7 +16,6 @@ import {
 export function User() {
   const navigate = useNavigate();
 
-  // ✅ Keep all default localStorage states
   const [profilePic, setProfilePic] = useState(() => localStorage.getItem("profilePic") || "");
   const [favoriteGame, setFavoriteGame] = useState(() => {
     const stored = localStorage.getItem("favoriteGame");
@@ -35,7 +34,6 @@ export function User() {
     return stored ? JSON.parse(stored) : [];
   });
 
-  // ✅ Replace only `userName` with API data
   const [userName, setUserName] = useState(localStorage.getItem("username") || "Nathanael Tate Cotton");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -46,7 +44,7 @@ export function User() {
         if (!response.ok) throw new Error("Unauthorized");
 
         const data = await response.json();
-        setUserName(data.user.username); // ✅ Update only userName
+        setUserName(data.user.username);
       } catch (error) {
         console.error("Error fetching user data:", error);
         setUserName("Unknown User");
