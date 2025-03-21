@@ -1,7 +1,6 @@
 {
-  "name": "express",
+  "name": "secure-auth-server",
   "version": "1.0.0",
-  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,11 +10,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.21.2",
-    "node-fetch": "^3.3.2",
-    "bcryptjs": "^3.0.2",
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "uuid": "^11.1.0"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mongoose": "^8.12.1"
   }
 }
