@@ -131,6 +131,67 @@ app.post('/logout', (req, res) => {
   res.json({ msg: "Logged out successfully" });
 });
 
+app.put('/api/user/profilePic', authenticate, async (req, res) => {
+  const { profilePic } = req.body;
+  const userId = req.user.id;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, { profilePic }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json({ user: updatedUser });
+  } catch (error) {
+    console.error("Error updating profile picture:", error);
+    res.status(500).json({ msg: "Server error updating profile picture" });
+  }
+});
+
+app.put('/api/user/favoriteGame', authenticate, async (req, res) => {
+  const { favoriteGame } = req.body;
+  const userId = req.user.id;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, { favoriteGame }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json({ user: updatedUser });
+  } catch (error) {
+    console.error("Error updating favorite game:", error);
+    res.status(500).json({ msg: "Server error updating favorite game" });
+  }
+});
+
+app.put('/api/user/gameCategories', authenticate, async (req, res) => {
+  const { gameCategories } = req.body;
+  const userId = req.user.id;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, { gameCategories }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json({ user: updatedUser });
+  } catch (error) {
+    console.error("Error updating game categories:", error);
+    res.status(500).json({ msg: "Server error updating game categories" });
+  }
+});
+
+app.put('/api/user/friends', authenticate, async (req, res) => {
+  const { friends } = req.body;
+  const userId = req.user.id;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, { friends }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json({ user: updatedUser });
+  } catch (error) {
+    console.error("Error updating friends:", error);
+    res.status(500).json({ msg: "Server error updating friends" });
+  }
+});
+
+
 function authenticate(req, res, next) {
   const token = req.cookies?.token;
   if (!token || !sessions[token]) {
