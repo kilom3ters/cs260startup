@@ -134,7 +134,6 @@ app.get('/api/user', async (req, res) => {
   }
 });
 
-
 app.post('/logout', (req, res) => {
   const token = req.cookies?.token;
   if (token) {
@@ -204,7 +203,6 @@ app.put('/api/user/friends', authenticate, async (req, res) => {
   }
 });
 
-
 function authenticate(req, res, next) {
   const token = req.cookies?.token;
   if (!token || !sessions[token]) {
@@ -219,7 +217,6 @@ app.get('/api/protected', authenticate, (req, res) => {
 });
 
 app.use(express.static(__dirname));
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './public/index.html'));
 });
