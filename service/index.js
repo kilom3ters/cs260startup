@@ -6,8 +6,8 @@ const cors = require('cors');
 const path = require('path');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const mongoose = require('mongoose');
-const dbConfig = require('../dbConfig.json');
-const User = require('./models/user');
+const dbConfig = require('./dbConfig.json');
+const User = require('./user-model');
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -116,13 +116,24 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/api/user', (req, res) => {
+app.get('/api/user', async (req, res) => {
   const token = req.cookies?.token;
   if (!token || !sessions[token]) {
     return res.status(401).json({ msg: "Unauthorized" });
   }
-  res.json({ user: sessions[token] });
+  try {
+    const userId = sessions[token].id;
+    const updatedUser = await User.findById(userId).select('-password').lean();
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+    res.json({ user: updatedUser });
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).json({ msg: "Server error retrieving user" });
+  }
 });
+
 
 app.post('/logout', (req, res) => {
   const token = req.cookies?.token;
@@ -207,7 +218,8 @@ app.get('/api/protected', authenticate, (req, res) => {
   res.json({ msg: `Hello, ${req.user.username}! You are authenticated.` });
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
