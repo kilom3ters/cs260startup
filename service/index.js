@@ -216,7 +216,7 @@ app.get('/api/protected', authenticate, (req, res) => {
   res.json({ msg: `Hello, ${req.user.username}! You are authenticated.` });
 });
 
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
