@@ -20,81 +20,82 @@ export function Login() {
     setLoginError("");
 
     try {
-        const response = await fetch("/login", {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user: loginUsername, password: loginPassword }),
-            credentials: "include",
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            console.log("Login Successful!", data);
-            localStorage.setItem("username", data.user);
-            navigate("/user"); 
-        } else {
-            console.log("Login Error:", data.msg);
-            setLoginError(data.msg);
-        }
-    } catch (error) {
-        console.error("Login Failed:", error);
-        setLoginError("Server error. Please try again.");
-    }
-}
-
-
-async function handleSignupSubmit(event) {
-  event.preventDefault();
-  setSignupError("");
-
-  if (signupPassword !== confirmPassword) {
-      setSignupError("Passwords do not match.");
-      return;
-  }
-
-  try {
-      const response = await fetch("/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user: signupUsername, password: signupPassword }),
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: loginUsername, password: loginPassword }),
+        credentials: "include",
       });
 
       const data = await response.json();
 
       if (response.ok) {
-          console.log("Signup Successful!", data);
-          localStorage.setItem("username", data.user);
-          navigate("/user");
+        console.log("Login Successful!", data);
+        navigate("/user"); 
       } else {
-          console.log("Signup Error:", data.msg);
-          setSignupError(data.msg);
+        console.log("Login Error:", data.msg);
+        setLoginError(data.msg);
       }
-  } catch (error) {
+    } catch (error) {
+      console.error("Login Failed:", error);
+      setLoginError("Server error. Please try again.");
+    }
+  }
+
+  async function handleSignupSubmit(event) {
+    event.preventDefault();
+    setSignupError("");
+
+    if (signupPassword !== confirmPassword) {
+      setSignupError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: signupUsername, password: signupPassword }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Signup Successful!", data);
+        navigate("/user");
+      } else {
+        console.log("Signup Error:", data.msg);
+        setSignupError(data.msg);
+      }
+    } catch (error) {
       console.error("Signup Failed:", error);
       setSignupError("Server error. Please try again.");
+    }
   }
-}
-async function handleLogout() {
-  await fetch("/logout", { method: "POST", credentials: "include" });
-  console.log("Clearing localStorage...")
-  localStorage.removeItem("username"); 
-  localStorage.clear(); 
-  navigate("/login");
-}
+
+  async function handleLogout() {
+    try {
+      await fetch("/logout", { method: "POST", credentials: "include" });
+      console.log("Logged out successfully");
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout Failed:", error);
+    }
+  }
 
   return (
     <main className="container-fluid">
       <div className="container-fluid vh-100">
         <div className="row h-100">
-          
           <div className="left-side-login">
             <div className="form-container">
               <h1 className="mb-4">Create an Account</h1>
               {signupError && <p className="text-danger">{signupError}</p>}
               <form onSubmit={handleSignupSubmit}>
                 <div className="mb-3 w-100 text-center">
-                  <label htmlFor="new-username" className="form-label">Email or Username</label>
+                  <label htmlFor="new-username" className="form-label">
+                  Username
+                  </label>
                   <input
                     type="text"
                     id="new-username"
@@ -105,7 +106,9 @@ async function handleLogout() {
                   />
                 </div>
                 <div className="mb-3 w-100 text-center">
-                  <label htmlFor="new-password" className="form-label">Password</label>
+                  <label htmlFor="new-password" className="form-label">
+                    Password
+                  </label>
                   <input
                     type="password"
                     id="new-password"
@@ -116,7 +119,9 @@ async function handleLogout() {
                   />
                 </div>
                 <div className="mb-3 w-100 text-center">
-                  <label htmlFor="confirm-password" className="form-label">Confirm Password</label>
+                  <label htmlFor="confirm-password" className="form-label">
+                    Confirm Password
+                  </label>
                   <input
                     type="password"
                     id="confirm-password"
@@ -127,8 +132,15 @@ async function handleLogout() {
                   />
                 </div>
                 <div className="btn-container">
-                  <button type="submit" className="btn btn-light">Create Account</button>
-                  <button onClick={() => navigate('/user')} className="btn btn-outline-light skip-login">Skip Login</button>
+                  <button type="submit" className="btn btn-light">
+                    Create Account
+                  </button>
+                  <button
+                    onClick={() => navigate("/user")}
+                    className="btn btn-outline-light skip-login"
+                  >
+                    Skip Login
+                  </button>
                 </div>
               </form>
             </div>
@@ -140,7 +152,9 @@ async function handleLogout() {
               {loginError && <p className="text-danger">{loginError}</p>}
               <form onSubmit={handleLoginSubmit}>
                 <div className="mb-3 w-100 text-center">
-                  <label htmlFor="username" className="form-label">Email or Username</label>
+                  <label htmlFor="username" className="form-label">
+                   Username
+                  </label>
                   <input
                     type="text"
                     id="username"
@@ -151,7 +165,9 @@ async function handleLogout() {
                   />
                 </div>
                 <div className="mb-3 w-100 text-center">
-                  <label htmlFor="password" className="form-label">Password</label>
+                  <label htmlFor="password" className="form-label">
+                    Password
+                  </label>
                   <input
                     type="password"
                     id="password"
@@ -162,13 +178,19 @@ async function handleLogout() {
                   />
                 </div>
                 <div className="btn-container">
-                  <button type="submit" className="btn btn-dark">Login</button>
-                  <button onClick={() => navigate('/user')} className="btn btn-outline-dark skip-login">Skip Login</button>
+                  <button type="submit" className="btn btn-dark">
+                    Login
+                  </button>
+                  <button
+                    onClick={() => navigate("/user")}
+                    className="btn btn-outline-dark skip-login"
+                  >
+                    Skip Login
+                  </button>
                 </div>
               </form>
             </div>
           </div>
-
         </div>
       </div>
     </main>

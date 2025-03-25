@@ -15,13 +15,13 @@ app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 const sessions = {};
 
 mongoose.connect(dbConfig.connectionString, {
-    bufferCommands: true,
-    serverSelectionTimeoutMS: 30000,
-    socketTimeoutMS: 45000,
-    family: 4,
-    maxPoolSize: 10,
-    connectTimeoutMS: 30000,
-    retryWrites: true
+  bufferCommands: true,
+  serverSelectionTimeoutMS: 30000,
+  socketTimeoutMS: 45000,
+  family: 4,
+  maxPoolSize: 10,
+  connectTimeoutMS: 30000,
+  retryWrites: true
 })
   .then(() => {
     console.log('Connected to MongoDB!');
@@ -32,6 +32,8 @@ mongoose.connect(dbConfig.connectionString, {
     console.error('MongoDB connection error:', err);
     process.exit(1);
   });
+
+mongoose.set('debug', true);
 
 app.get('/api/quote', async (req, res) => {
   try {
