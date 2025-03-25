@@ -16,25 +16,13 @@ import {
 export function User() {
   const navigate = useNavigate();
 
-  const [profilePic, setProfilePic] = useState(() => localStorage.getItem("profilePic") || "");
-  const [favoriteGame, setFavoriteGame] = useState(() => {
-    const stored = localStorage.getItem("favoriteGame");
-    return stored ? JSON.parse(stored) : null;
-  });
-
+  const [profilePic, setProfilePic] = useState("");
+  const [favoriteGame, setFavoriteGame] = useState(null);
   const defaultCategories = [{ name: 'Played Games', items: [] }];
-  const [categories, setCategories] = useState(() => {
-    const stored = localStorage.getItem('gameCategories');
-    return stored ? JSON.parse(stored) : defaultCategories;
-  });
-
+  const [categories, setCategories] = useState(defaultCategories);
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
-  const [friends, setFriends] = useState(() => {
-    const stored = localStorage.getItem("friends");
-    return stored ? JSON.parse(stored) : [];
-  });
-
-  const [userName, setUserName] = useState(localStorage.getItem("username") || "Nathanael Tate Cotton");
+  const [friends, setFriends] = useState([]);
+  const [userName, setUserName] = useState("Unknown User");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -42,31 +30,28 @@ export function User() {
       try {
         const response = await fetch("/api/user", { credentials: "include" });
         if (!response.ok) throw new Error("Unauthorized");
-
         const data = await response.json();
-        setUserName(data.user.username);
+        setUserName(data.user.username || "Unknown User");
+        setProfilePic(data.user.profilePic || "");
+        setFavoriteGame(data.user.favoriteGame || null);
+        setCategories(data.user.gameCategories?.length ? data.user.gameCategories : defaultCategories);
+        setFriends(data.user.friends || []);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setUserName("Unknown User");
       } finally {
         setIsLoading(false);
       }
     }
-
     fetchUserData();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('gameCategories', JSON.stringify(categories));
-  }, [categories]);
-
-  useEffect(() => {
-    localStorage.setItem("friends", JSON.stringify(friends));
-  }, [friends]);
-
   async function handleLogout() {
-    await fetch("/logout", { method: "POST", credentials: "include" });
-    navigate("/");
+    try {
+      await fetch("/logout", { method: "POST", credentials: "include" });
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout Failed:", error);
+    }
   }
 
   if (isLoading) return <p>Loading...</p>;
@@ -77,9 +62,17 @@ export function User() {
         <div className="col-md-3 col-lg-2 sidebar">
           <div className="text-center">
             {profilePic ? (
-              <img src={profilePic} width="100" alt="User Profile" className="profile-pic" onClick={() => handleEditProfilePic(setProfilePic)} />
+              <img
+                src={profilePic}
+                width="100"
+                alt="User Profile"
+                className="profile-pic"
+                onClick={() => handleEditProfilePic(setProfilePic)}
+              />
             ) : (
-              <p className="profile-text" onClick={() => handleEditProfilePic(setProfilePic)}>No Profile Picture Set</p>
+              <p className="profile-text" onClick={() => handleEditProfilePic(setProfilePic)}>
+                No Profile Picture Set
+              </p>
             )}
             <p className="profile-text" onClick={() => handleEditProfilePic(setProfilePic)}>
               {profilePic ? "Edit Profile Picture" : "Add Profile Picture"}
@@ -119,7 +112,13 @@ export function User() {
                 <div className="align-items-center">
                   {favoriteGame ? (
                     <>
-                      <img src={favoriteGame.image} width="100" alt="Favorite Game" className="profile-pic" onClick={() => handleEditFavoriteGame(setFavoriteGame, favoriteGame)} />
+                      <img
+                        src={favoriteGame.image}
+                        width="100"
+                        alt="Favorite Game"
+                        className="profile-pic"
+                        onClick={() => handleEditFavoriteGame(setFavoriteGame, favoriteGame)}
+                      />
                       <small>{favoriteGame.name}</small>
                     </>
                   ) : (
@@ -145,13 +144,19 @@ export function User() {
               <div className="category-list">
                 {categories.map((category, index) => (
                   <div key={index} className="category-item-container">
-                    <div className={`category-item ${selectedCategoryIndex === index ? "selected" : ""}`} onClick={() => setSelectedCategoryIndex(index)}>
+                    <div
+                      className={`category-item ${selectedCategoryIndex === index ? "selected" : ""}`}
+                      onClick={() => setSelectedCategoryIndex(index)}
+                    >
                       {category.name}
                     </div>
-                    <button className="delete-button" onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteCategory(index, categories, setCategories, selectedCategoryIndex, setSelectedCategoryIndex);
-                    }}>
+                    <button
+                      className="delete-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteCategory(index, categories, setCategories, selectedCategoryIndex, setSelectedCategoryIndex);
+                      }}
+                    >
                       x
                     </button>
                   </div>

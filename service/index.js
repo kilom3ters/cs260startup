@@ -78,7 +78,7 @@ app.post('/register', async (req, res) => {
     const token = uuidv4();
     const sessionUser = { username: newUser.username, createdAt: newUser.createdAt, id: newUser._id };
     sessions[token] = sessionUser;
-    res.cookie('token', token, { secure: true, httpOnly: true, sameSite: 'strict' });
+    res.cookie('token', token, { secure: false, httpOnly: true, sameSite: 'strict' }); // Changed here for local testing
     console.log("User Registered & Logged In:", sessionUser);
     return res.json({ user: sessionUser, token });
   } catch (error) {
@@ -107,7 +107,7 @@ app.post('/login', async (req, res) => {
     const token = uuidv4();
     const sessionUser = { username: foundUser.username, createdAt: foundUser.createdAt, id: foundUser._id };
     sessions[token] = sessionUser;
-    res.cookie('token', token, { secure: true, httpOnly: true, sameSite: 'strict' });
+    res.cookie('token', token, { secure: false, httpOnly: true, sameSite: 'strict' }); // Changed here for local testing
     console.log("Login Successful:", sessionUser);
     return res.json({ user: sessionUser, token });
   } catch (error) {
