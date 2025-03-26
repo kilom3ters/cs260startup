@@ -160,3 +160,6 @@ For this deliverable, I implemented a backend service that supports user authent
 
 - **User Data:**  
   Data is stored in MongoDB and persists after logout.
+
+- **Other Notes:**
+  Uses Mongoose and the database code is all in index.js.
