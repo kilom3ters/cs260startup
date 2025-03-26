@@ -42,6 +42,57 @@ describe('API Endpoints', () => {
     expect(res.body.user).toHaveProperty('username', testUsername);
   });
 
+  it('should fail to fetch current user data without a token', async () => {
+    const res = await request(app)
+      .get('/api/user')
+      .expect(401);
+    expect(res.body).toHaveProperty('msg', 'Unauthorized');
+  });
+
+  it('should update user profilePic', async () => {
+    const newPic = 'https://example.com/newpic.jpg';
+    const res = await request(app)
+      .put('/api/user/profilePic')
+      .set('Cookie', `token=${token}`)
+      .send({ profilePic: newPic })
+      .expect(200);
+    expect(res.body).toHaveProperty('user');
+    expect(res.body.user).toHaveProperty('profilePic', newPic);
+  });
+
+  it('should update favorite game', async () => {
+    const favoriteGame = { name: 'Super Mario', image: 'https://example.com/mario.jpg' };
+    const res = await request(app)
+      .put('/api/user/favoriteGame')
+      .set('Cookie', `token=${token}`)
+      .send({ favoriteGame })
+      .expect(200);
+    expect(res.body).toHaveProperty('user');
+    expect(res.body.user.favoriteGame).toEqual(favoriteGame);
+  });
+
+  it('should update game categories', async () => {
+    const gameCategories = [{ name: 'RPG Games', items: [] }];
+    const res = await request(app)
+      .put('/api/user/gameCategories')
+      .set('Cookie', `token=${token}`)
+      .send({ gameCategories })
+      .expect(200);
+    expect(res.body).toHaveProperty('user');
+    expect(res.body.user.gameCategories).toEqual(gameCategories);
+  });
+
+  it('should update friends list', async () => {
+    const friends = [{ name: 'Alice', image: 'https://example.com/alice.jpg' }];
+    const res = await request(app)
+      .put('/api/user/friends')
+      .set('Cookie', `token=${token}`)
+      .send({ friends })
+      .expect(200);
+    expect(res.body).toHaveProperty('user');
+    expect(res.body.user.friends).toEqual(friends);
+  });
+
   it('should log out successfully', async () => {
     const res = await request(app)
       .post('/logout')
