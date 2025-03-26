@@ -152,3 +152,11 @@ For this deliverable, I implemented a backend service that supports user authent
   - Logout functionality
 - **Frontend calls service endpoints** - Used the fetch API in the frontend to interact with backend endpoints.
 - **Supports registration, login, logout, and restricted endpoints** - Implemented authentication using sessions and cookies.
+
+## DB/Login Deliverable
+
+- **MongoDB Integration:**  
+  All user data—including credentials—is stored in MongoDB.
+
+- **User Data:**  
+  Data is stored in MongoDB and persists after logout.
