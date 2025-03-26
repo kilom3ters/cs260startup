@@ -7,7 +7,7 @@ const path = require('path');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const mongoose = require('mongoose');
 const dbConfig = require('./dbConfig.json');
-const User = require('./user-model');
+const User = require('./user-model.js');
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -134,6 +134,7 @@ app.get('/api/user', async (req, res) => {
   }
 });
 
+
 app.post('/logout', (req, res) => {
   const token = req.cookies?.token;
   if (token) {
@@ -203,6 +204,7 @@ app.put('/api/user/friends', authenticate, async (req, res) => {
   }
 });
 
+
 function authenticate(req, res, next) {
   const token = req.cookies?.token;
   if (!token || !sessions[token]) {
@@ -217,6 +219,7 @@ app.get('/api/protected', authenticate, (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
