@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 
 export function Chat() {
+  const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
