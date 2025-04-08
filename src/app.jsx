@@ -5,6 +5,7 @@ import {Login} from './login/login'
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { User } from './user/user';
 import { Home } from './home/home';
+import { Chat } from './chat/chat';
 
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
  <Route path='/login' element={<Login />} />
  <Route path='/user' element={<User />} />
  <Route path='*' element={<NotFound />} />
+ <Route path='/chat' element={<Chat />} />
 </Routes>
 </div>
 </BrowserRouter>
