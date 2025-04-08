@@ -8,7 +8,11 @@ export function Chat() {
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:4000');
+        const socketUrl = window.location.protocol === 'https:' 
+          ? `wss://${window.location.host}` 
+          : `ws://${window.location.host}`;
+
+    const ws = new WebSocket(socketUrl);
 
     ws.onopen = () => {
       console.log("WebSocket connection established");
