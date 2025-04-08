@@ -82,6 +82,12 @@ export function User() {
               + Add Friends
             </button>
           </div>
+          <button
+              className="btn btn-primary w-100 mt-2"
+              onClick={() => navigate("/chat")}
+            >
+              Go to Chat
+            </button>
           <hr />
           <ul className="nav flex-column">
             <li className="nav-item">
