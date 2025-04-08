@@ -38,37 +38,47 @@ export function Chat() {
   };
 
   return (
-    <div className="chat-container" style={{ maxWidth: '600px', margin: '0 auto', padding: '1rem' }}>
-      <h2>Chat</h2>
-      <div 
-        className="chat-messages"
-        style={{
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          height: '300px',
-          overflowY: 'scroll',
-          marginBottom: '1rem',
-          padding: '0.5rem'
-        }}
-      >
-        {messages.map((msg, idx) => (
-          <div key={idx} className="chat-message" style={{ marginBottom: '0.5rem' }}>
-            {msg}
-          </div>
-        ))}
-      </div>
-      <div className="chat-input" style={{ display: 'flex' }}>
-        <input 
-          type="text"
-          placeholder="Type your message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          style={{ flex: 1, padding: '0.5rem' }}
-        />
-        <button onClick={sendMessage} style={{ padding: '0.5rem 1rem', marginLeft: '0.5rem' }}>
-          Send
+    <>
+      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '1rem' }}>
+        <button 
+          onClick={() => navigate("/user")} 
+          className="btn btn-secondary mb-3"
+        >
+          Back to User Page
         </button>
       </div>
-    </div>
+      <div className="chat-container" style={{ maxWidth: '600px', margin: '0 auto', padding: '1rem' }}>
+        <h2>Chat</h2>
+        <div 
+          className="chat-messages"
+          style={{
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            height: '300px',
+            overflowY: 'scroll',
+            marginBottom: '1rem',
+            padding: '0.5rem'
+          }}
+        >
+          {messages.map((msg, idx) => (
+            <div key={idx} className="chat-message" style={{ marginBottom: '0.5rem' }}>
+              {msg}
+            </div>
+          ))}
+        </div>
+        <div className="chat-input" style={{ display: 'flex' }}>
+          <input 
+            type="text"
+            placeholder="Type your message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            style={{ flex: 1, padding: '0.5rem' }}
+          />
+          <button onClick={sendMessage} style={{ padding: '0.5rem 1rem', marginLeft: '0.5rem' }}>
+            Send
+          </button>
+        </div>
+      </div>
+    </>
   );
-}
+}  
