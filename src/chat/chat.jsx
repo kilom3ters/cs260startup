@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 export function Chat() {
   const navigate = useNavigate();
@@ -15,13 +15,18 @@ export function Chat() {
     };
 
     ws.onmessage = (event) => {
-      console.log("Received message:", event.data);
-      setMessages(prev => [...prev, event.data]);
-    };
-
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
+        if (event.data instanceof Blob) {
+          event.data.text().then((text) => {
+            console.log("Converted message:", text);
+            setMessages((prev) => [...prev, text]);
+          }).catch((err) => {
+            console.error("Error converting Blob to text:", err);
+          });
+        } else {
+          console.log("Received message:", event.data);
+          setMessages((prev) => [...prev, event.data]);
+        }
+      };      
 
     setSocket(ws);
 
@@ -31,11 +36,16 @@ export function Chat() {
   }, []);
 
   const sendMessage = () => {
+    console.log("Attempting to send message:", input);
     if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(input);
-      setInput("");
+      try {
+        socket.send(input);
+        setInput("");
+      } catch (err) {
+        console.error("Error while sending message:", err);
+      }
     } else {
-      console.error("WebSocket is not open. Ready state:", socket.readyState);
+      console.error("WebSocket is not open. Ready state:", socket ? socket.readyState : 'No socket');
     }
   };
 
@@ -62,11 +72,15 @@ export function Chat() {
             padding: '0.5rem'
           }}
         >
-          {messages.map((msg, idx) => (
-            <div key={idx} className="chat-message" style={{ marginBottom: '0.5rem' }}>
-              {msg}
-            </div>
-          ))}
+          {messages && messages.length > 0 ? (
+            messages.map((msg, idx) => (
+              <div key={idx} className="chat-message" style={{ marginBottom: '0.5rem' }}>
+                {msg}
+              </div>
+            ))
+          ) : (
+            <p>No messages yet.</p>
+          )}
         </div>
         <div className="chat-input" style={{ display: 'flex' }}>
           <input 
@@ -83,4 +97,4 @@ export function Chat() {
       </div>
     </>
   );
-}  
+}
