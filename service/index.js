@@ -8,6 +8,10 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 const mongoose = require('mongoose');
 const dbConfig = require('./dbConfig.json');
 const User = require('./user-model.js');
+
+const http = require('http');
+const WebSocket = require('ws');
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -26,7 +30,24 @@ mongoose.connect(dbConfig.connectionString, {
   .then(() => {
     console.log('Connected to MongoDB!');
     const PORT = 4000;
-    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+    const server = http.createServer(app);
+    server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+    const wss = new WebSocket.Server({ server });
+    wss.on('connection', (ws) => {
+      console.log('New WebSocket connection established');
+
+      ws.send('Welcome to the WebSocket server!');
+
+      ws.on('message', (message) => {
+        console.log('Received via WS:', message);
+        wss.clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
+          }
+        });
+      });
+    });
   })
   .catch(err => {
     console.error('MongoDB connection error:', err);
@@ -78,7 +99,7 @@ app.post('/register', async (req, res) => {
     const token = uuidv4();
     const sessionUser = { username: newUser.username, createdAt: newUser.createdAt, id: newUser._id };
     sessions[token] = sessionUser;
-    res.cookie('token', token, { secure: false, httpOnly: true, sameSite: 'strict' }); // Changed here for local testing
+    res.cookie('token', token, { secure: false, httpOnly: true, sameSite: 'strict' });
     console.log("User Registered & Logged In:", sessionUser);
     return res.json({ user: sessionUser, token });
   } catch (error) {
@@ -107,7 +128,7 @@ app.post('/login', async (req, res) => {
     const token = uuidv4();
     const sessionUser = { username: foundUser.username, createdAt: foundUser.createdAt, id: foundUser._id };
     sessions[token] = sessionUser;
-    res.cookie('token', token, { secure: false, httpOnly: true, sameSite: 'strict' }); // Changed here for local testing
+    res.cookie('token', token, { secure: false, httpOnly: true, sameSite: 'strict' });
     console.log("Login Successful:", sessionUser);
     return res.json({ user: sessionUser, token });
   } catch (error) {
@@ -134,7 +155,6 @@ app.get('/api/user', async (req, res) => {
   }
 });
 
-
 app.post('/logout', (req, res) => {
   const token = req.cookies?.token;
   if (token) {
@@ -143,6 +163,15 @@ app.post('/logout', (req, res) => {
   }
   res.json({ msg: "Logged out successfully" });
 });
+
+function authenticate(req, res, next) {
+  const token = req.cookies?.token;
+  if (!token || !sessions[token]) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  req.user = sessions[token];
+  next();
+}
 
 app.put('/api/user/profilePic', authenticate, async (req, res) => {
   const { profilePic } = req.body;
@@ -204,22 +233,11 @@ app.put('/api/user/friends', authenticate, async (req, res) => {
   }
 });
 
-
-function authenticate(req, res, next) {
-  const token = req.cookies?.token;
-  if (!token || !sessions[token]) {
-    return res.status(401).json({ msg: "Unauthorized" });
-  }
-  req.user = sessions[token];
-  next();
-}
-
 app.get('/api/protected', authenticate, (req, res) => {
   res.json({ msg: `Hello, ${req.user.username}! You are authenticated.` });
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// app.use(express.static(path.join(__dirname, '../public')));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../public', 'index.html'));
+// });
