@@ -163,3 +163,15 @@ For this deliverable, I implemented a backend service that supports user authent
 
 - **Other Notes:**
   Uses Mongoose and the database code is all in index.js.
+
+## WebSocket Deliverable
+
+For this deliverable, I implemented WebSocket functionality in my Gamelog application to enable real-time chat communication between users.
+
+- Backend listens for WebSocket connections
+
+- Frontend establishes WebSocket connections
+
+- Messages are sent and received over WebSocket connections 
+
+WebSocket messages are displayed in real-time - The chat messages appear immediately for all connected users.
